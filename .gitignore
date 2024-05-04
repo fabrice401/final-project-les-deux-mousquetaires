@@ -1,0 +1,2 @@
+# Ignore the local directory that temporarily stores csv files of patent data
+scraping/download_patent_records
