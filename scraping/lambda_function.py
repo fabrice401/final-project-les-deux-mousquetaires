@@ -8,7 +8,12 @@ def start_scraping(patent_no, patent_url, bucket_name):
     s3 = boto3.resource('s3')
     
     # Use requests to fetch web content
-    response = requests.get(patent_url)
+    try:
+        response = requests.get(patent_url)
+    except:
+        file_name = f"/tmp/failed_patent_no.txt"
+        with open(file_name, 'w') as file:
+            file.write(patent_no)
     
     # Check if the request was successful
     if response.status_code == 200:
