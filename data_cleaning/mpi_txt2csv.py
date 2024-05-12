@@ -57,6 +57,8 @@ def process_files(files):
                 'legal': [str(legal_events_dict)]
             })
             dfs.append(df)
+        # Remove the file after processing
+        os.remove(file_path)
     return pd.concat(dfs, ignore_index=True)
 
 if __name__ == '__main__':
