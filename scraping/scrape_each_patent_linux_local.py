@@ -30,9 +30,10 @@ def start_scraping(patent_no, patent_url):
 
 
 # Get the list of patent numbers and URLs from the event
-n = 0
+start = 191036
+end = 286555
 data = pd.read_csv('all_patents_link.csv')
-data = data.iloc[n:]
+data = data.iloc[start:end]
 data.dropna(subset=['id', 'result link'], inplace=True)
 
 patent_nos = data['id'].tolist()
@@ -40,7 +41,11 @@ patent_nos = data['id'].tolist()
 patent_urls = data['result link'].tolist()
 
 # Iterate through the list of patent_nos and patent_urls
+n = 0
 for patent_no, patent_url in zip(patent_nos, patent_urls):
     # Call start_scraping function for each pair of patent_no and patent_url
     start_scraping(patent_no, patent_url)
     time.sleep(2)  # Pause for 2 seconds between requests
+    n += 1
+    if n % 1000 == 0:
+        print(f"Having scraped {n} pages.")
