@@ -37,25 +37,24 @@ for file_name in os.listdir(folder_path):
                 event = timeline_tag.find('span', itemprop='title').text.strip()
                 timeline_dict[date] = event
             
-            # get cited by table
+            # get cited by table (US)
+            cited_by_tags_us = soup.find_all('tr', itemprop='forwardReferencesOrig')
+            cited_by_dict_us = {}
+            for cited_by_tag_us in cited_by_tags_us:
+                publication_number = cited_by_tag_us.find('span', itemprop='publicationNumber').text.strip()
+                if not publication_number.startswith('US'):
+                    continue  # if not a US patent, skip
+                assignee = cited_by_tag_us.find('span', itemprop='assigneeOriginal').text.strip()
+                cited_by_dict_us[publication_number] = assignee
+            
+            # get cited by table (global)
             cited_by_tags = soup.find_all('tr', itemprop='forwardReferencesOrig')
             cited_by_dict = {}
             for cited_by_tag in cited_by_tags:
                 publication_number = cited_by_tag.find('span', itemprop='publicationNumber').text.strip()
-                if not publication_number.startswith('US'):
-                    continue  # if not a US patent, skip
                 assignee = cited_by_tag.find('span', itemprop='assigneeOriginal').text.strip()
                 cited_by_dict[publication_number] = assignee
 
-            # get legal events table
-            legal_events_tags = soup.find_all('tr', itemprop='legalEvents')
-            legal_events_dict = {}
-            for legal_event_tag in legal_events_tags:
-                code = legal_event_tag.find('td', itemprop='code').text.strip()
-                if (code.startswith('AS') and len(code) == 4) or code.startswith('PS'):
-                    date = legal_event_tag.find('time', itemprop='date').text.strip()
-                    title = legal_event_tag.find('td', itemprop='title').text.strip()
-                    legal_events_dict[date] = title
 
             # Create a DataFrame for the current file and append it to the list
             df = pd.DataFrame({
@@ -63,8 +62,8 @@ for file_name in os.listdir(folder_path):
                 'abstract': [abstract],
                 'classification': [', '.join(classifications)],
                 'timeline': [str(timeline_dict)],
-                'citedby': [str(cited_by_dict)],
-                'legal': [str(legal_events_dict)]
+                'citedbyus': [str(cited_by_dict_us)],
+                'citedby': [str(cited_by_dict)]
             })
             dfs.append(df)
 
