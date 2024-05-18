@@ -6,11 +6,29 @@ import os
 
 # No prefix to list all files at the base level in s3 bucket (default setting)
 def download_and_process_files(s3_client, bucket_name, s3_prefix=''):
-    # List objects in the specified S3 bucket and prefix
-    response = s3_client.list_objects_v2(Bucket=bucket_name, Prefix=s3_prefix)
-    
-    # Collect file keys
-    file_keys = [obj['Key'] for obj in response.get('Contents', []) if obj['Key'].endswith('.txt')]
+    file_keys = []
+    continuation_token = None
+
+    # Deal with the case that list_objects_v2 can only retrieve 1,000 objects in the s3 bucket
+    while True:
+        if continuation_token:
+            response = s3_client.list_objects_v2(
+                Bucket=bucket_name,
+                Prefix=s3_prefix,
+                ContinuationToken=continuation_token
+            )
+        else:
+            response = s3_client.list_objects_v2(
+                Bucket=bucket_name,
+                Prefix=s3_prefix
+            )
+
+        file_keys.extend([obj['Key'] for obj in response.get('Contents', []) if obj['Key'].endswith('.txt')])
+
+        if response.get('IsTruncated'):  # If there are more keys to retrieve
+            continuation_token = response.get('NextContinuationToken')
+        else:
+            break
     
     return file_keys
 
@@ -59,16 +77,18 @@ def process_file_from_s3(s3_client, bucket_name, file_key):
     return df
 
 if __name__ == '__main__':
-    # Configure MPI setting
+    # Configure MPI settings
     comm = MPI.COMM_WORLD
     rank = comm.Get_rank()
     size = comm.Get_size()
     
+    print(f"Process {rank} starting...")
+    
     # Define constants (change based on individual circumstances)
     BUCKET_NAME = 'patent-bucket-raw-sam' 
-    AWS_ACCESS_KEY_ID = 'ASIAR6SRDSVDHVPQDUP4'
-    AWS_SECRET_ACCESS_KEY = 'EiPYsQYkBAnjSKda5edRtDSeF49aIBE2YQDUKxjY'
-    AWS_SESSION_TOKEN = 'IQoJb3JpZ2luX2VjEHYaCXVzLXdlc3QtMiJIMEYCIQC1KAAr4bDz7w5wdD+L8VQs9+llPIFcCyFTy80rjxrbDAIhAIDwns+hioAJNgecOig1Uzu7BfQZgYbVabxfOCe05N7OKrgCCN///////////wEQABoMMTM0Mzg3ODMyMTM0IgzSLljGeo+9lZY67scqjAIljrwc/Ev7b3uBWFEvWbSV3XQEAT0P0E4VGnPbK7FpRa0lLVFKSDaPbPO0Qn6YJoF4vbr55txLmWd8WYNXcdzP2Fmql0eQGewOzJTS0OdocxwJ41IeICGIpZsxzzCzyyZSpqAAqqYs6UUk6k38VU6GfBiGSlH3o63Rz2a+L9J3RRrYohGsIFcbgwRtamyg5TkjPJRDvwL1NU33kt95S8av3h6tj/cnw6IdQSQKbMWKZL7d0Zg9depZR0IFyMYN1/jLM5k1RwqFs2ei8MTWZFbfM2ZwVXIOJapTX/Gt8ruQPqBliWmzU/rGtQOMHor84W04MZr8HhKWQ20jmlxuMuZiCIEQpZ8Kp1elHyrlMJeqn7IGOpwBlI8kuDogWRQ59ONuGYKbNtxc/anb/X571XeTvFXAWAaf1nsx9TOfV5ud8SEIvj99/DHRI46TgoDw85nJbqpR1iHxlf2K0B3qxz6cP/hUVDsnU0wZQZYXIZoBTi5VHTQ5f/SqdFUGRfz5biUrY5W4gvIwjK0ZjVgaIB7KugovVQ7t7J6QSaFDOKGGA/1GAL+8iFbPgFiB2OfbT8hE'
+    AWS_ACCESS_KEY_ID = 'ASIAR6SRDSVDAHMWVQFY'
+    AWS_SECRET_ACCESS_KEY = 'j6bk43Yh7S6l6XSIcXF/dQom97S4yM/IGaFDRJuP'
+    AWS_SESSION_TOKEN = 'IQoJb3JpZ2luX2VjEHoaCXVzLXdlc3QtMiJHMEUCIQChQ71EcEP2UJBKl+EbqcG4Y5BSErUeQPC4sSUNinBCSQIgdDMFRO4Rf7TFeupMYYH52DeKlhesqxCuA4lBl/Bor3AquAII4///////////ARAAGgwxMzQzODc4MzIxMzQiDOMx8a9AfjebSR1wYCqMAm95trNaGggtDr8OO6h04JW3BJK9SrdPWSdHrNSpcRPSObYsicmo8+HgFx/9+LHTNXt6IgRLmkRbol0HTzXqEfK4c+2man4NDv9dhMPO01dzoVpanfcixX0MPRjSIQORD3jKmJCZtV88+XGJLs+97HiwWE4sukTGRsKfKGqCAUvS7FtpYrgPNBKYMurYxc5GqKxRjQxD92k6F1Bw/T4igO13sydA4aXvgrhDtbD3gqsc6BmsFD2xxHkfN6vvs4QJBh/hcgaKmGQesGYfwJ7GbxGAUYNRMZ01q0CmD1AjKdEMRzIef8G1AVgM1wLfnLpq+5IM8/xBooCHMsv/gk6fEasmAqA7NsZErMM1UkAw7p6gsgY6nQHJmN9OYpDM5W9JUiqrUeTC8kbad6F3ehzQurWamresW4LuMartqqsuBpvKn/Fc4XaVGFElQmcCrP8KVAlxnQDl5E5hbAKBcltnM+lbT4qmVWr9VMSDXMiuy4OOkgdljXQsDZO9T9s6Pj6epHvdkKUkkg7xpnFuG9T+zwqiynp75yvv9+ZsgHrBGJ+gJMRqg/tgNNkY+7nq5oYgxRvU'
     
     # Initialize S3 client
     s3_client = boto3.client('s3',
@@ -78,7 +98,9 @@ if __name__ == '__main__':
                         )
     
     if rank == 0:
+        print("Downloading file keys...")
         file_keys = download_and_process_files(s3_client, BUCKET_NAME)
+        print(f"Total files to process: {len(file_keys)}")
     else:
         file_keys = None
     
@@ -94,12 +116,17 @@ if __name__ == '__main__':
     
     files_to_process = file_keys[start_idx:end_idx]
     
+    print(f"Process {rank} processing {len(files_to_process)} files...")
+    
     # Process assigned files and create local DataFrames
     local_dfs = []
     for file_key in files_to_process:
-        df = process_file_from_s3(BUCKET_NAME, file_key, s3_client)
+        print(f"Process {rank} processing file {file_key}...")
+        df = process_file_from_s3(s3_client, BUCKET_NAME, file_key)
         if df is not None:
             local_dfs.append(df)
+    
+    print(f"Process {rank} finished processing files.")
     
     # Combine local DataFrames into one
     local_df = pd.concat(local_dfs, ignore_index=True) if local_dfs else pd.DataFrame()
@@ -108,6 +135,7 @@ if __name__ == '__main__':
     all_dfs = comm.gather(local_df, root=0)
     
     if rank == 0:
+        print("Combining all DataFrames...")
         # Combine all DataFrames into the final DataFrame
         final_df = pd.concat(all_dfs, ignore_index=True)
         final_df.to_csv('patent_data.csv', index=False)
