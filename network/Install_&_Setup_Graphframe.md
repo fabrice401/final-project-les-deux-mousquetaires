@@ -11,13 +11,22 @@ scp graphframes-0.8.2-spark3.2-s_2.12.jar tianyuec@midway3.rcc.uchicago.edu:MACS
 ## Setup
 To use it for sinteractive:
 ```bash
+# Initiate sinteractive
+sinteractive --ntasks=10 --account=macs30123
+
 module load python spark
 
 export PYSPARK_DRIVER_PYTHON=/software/python-anaconda-2022.05-el8-x86_64/bin/python3
 
 pyspark --jars graphframes-0.8.2-spark3.2-s_2.12.jar
+
+# Exit pyspark
+exit()
+
+# Exit sinteractive
+exit()
 ```
 
 ## Documentation for graphframe
 - [Graphframes overview](https://graphframes.github.io/graphframes/docs/_site/index.html)
-- [pygraphframes documentation] (https://graphframes.github.io/graphframes/docs/_site/api/python/graphframes.html)
+- [pygraphframes documentation](https://graphframes.github.io/graphframes/docs/_site/api/python/graphframes.html)
