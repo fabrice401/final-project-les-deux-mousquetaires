@@ -6,3 +6,7 @@ scraping/raw
 
 # Ignore checkpoint folder for donwloading scraped txt files (converted to csv)
 data_cleaning/checkpoint
+
+# Ignore two large csv files (see Google Drive link)
+scraping/all_patents_link.csv
+data_cleaning/patent_data.csv
