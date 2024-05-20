@@ -9,6 +9,7 @@
 
 # Load Python and MPI modules
 module load python mpich
+pip install --user mpi4py-mpich==3.1.5
 
 # Run the python program with mpirun. The -n flag is not required;
 # mpirun will automatically figure out the best configuration from the
