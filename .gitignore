@@ -1,2 +1,8 @@
 # Ignore the local directory that temporarily stores csv files of patent data
 scraping/download_patent_records
+
+# Ignore txt files of scraped records
+scraping/raw
+
+# Ignore checkpoint folder for donwloading scraped txt files (converted to csv)
+data_cleaning/checkpoint
