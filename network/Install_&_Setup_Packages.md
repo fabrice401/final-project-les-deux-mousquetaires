@@ -1,4 +1,5 @@
-# Steps to Install and Stepup Packages
+# Steps to Install and Stepup Packages for Using Sinteractive
+Note: This markdown file details how to use `Graphframe` and `node2vec` when using sinteractive. For using sbatch jobs, please directly refer to the sbatch files in [`\network`](\network) folder.
 
 ## Graphframe
 ### Install
@@ -48,6 +49,5 @@ Then, export the LD_LIBRARY_PATH to include the directory that stores `libmkl_rt
 # Check directories that stores `libmkl_rt.so.1` file
 find / -name "libmkl_rt.so.1" 2>/dev/null
 
-echo 'export LD_LIBRARY_PATH=/home/veeratejg/anaconda3/lib:$LD_LIBRARY_PATH' >> ~/.bashrc
-source ~/.bashrc
+export LD_LIBRARY_PATH=/home/veeratejg/anaconda3/lib:$LD_LIBRARY_PATH
 ```
