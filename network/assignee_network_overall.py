@@ -2,6 +2,12 @@
 from helper_functions import * 
 
 '''
+Suppress user warning message in .out file
+'''
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+'''
 Prepare data for constructing the network 
 '''
 
