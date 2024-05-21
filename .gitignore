@@ -10,3 +10,6 @@ data_cleaning/checkpoint
 # Ignore two large csv files (see Google Drive link)
 scraping/all_patents_link.csv
 data_cleaning/patent_data.csv
+
+# Ignore temporary directory for spark session
+network/spark_temp_dir
