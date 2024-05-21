@@ -5,7 +5,7 @@ from helper_functions import *
 Prepare data for constructing the network 
 '''
 
-spark = initialize_spark_session(name='Patent Network Analysis')
+spark = initialize_spark_session(name='Patent Network Analysis (Assignee Network Overall)')
 # Load the patent data
 file_path = "../data_cleaning/patent_data_example.csv"
 patent_df = spark.read.csv(file_path, header=True, inferSchema=True)
@@ -80,6 +80,10 @@ overall_metrics = calculate_overall_network_metrics(vertices_df, edges_df,
                                                     out_degree_df, betweenness_spark_df, 
                                                     closeness_spark_df)
 
+overall_metrics_spark_df = spark.createDataFrame(pd.DataFrame([overall_metrics]))
+print("The overall measure of the patent assigneee network: ")
+overall_metrics_spark_df.show()
+
 '''
 Community detection
 '''
@@ -95,3 +99,8 @@ community_metrics_df = calculate_community_metrics(vertices_with_communities, g.
 community_metrics_df.show()
 
 # Probably also need to visualize the network
+
+'''
+Terminate the spark session 
+'''
+spark.stop()
