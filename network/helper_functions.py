@@ -55,7 +55,7 @@ def calculate_betweenness_closeness_centrality(edges_df, spark_session):
     return betweenness_spark_df, closeness_spark_df
 
 def calculate_overall_network_metrics(vertices_df, edges_df, degree_df, 
-                                      in_degree_df, out_degree_df, 
+                                      in_degree_df, out_degree_df, pagerank_df,
                                       betweenness_spark_df, closeness_spark_df):
     # 1. Network Density
     num_nodes = vertices_df.count()
@@ -72,13 +72,16 @@ def calculate_overall_network_metrics(vertices_df, edges_df, degree_df,
     # 4. Average out-degree
     avg_out_degree = out_degree_df.select(F.avg("outDegree").cast("double")).first()[0]
 
-    # 5. Average betweenness
+    # 4. Average pagerank
+    avg_pagerank = out_degree_df.select(F.avg("pagerank").cast("double")).first()[0]
+
+    # 6. Average betweenness
     if betweenness_spark_df.count() > 0:
         avg_betweenness = betweenness_spark_df.select(F.avg("betweenness").cast("double")).first()[0]
     else:
         avg_betweenness = 0.0
 
-    # 6. Average closeness
+    # 7. Average closeness
     if closeness_spark_df.count() > 0:
         avg_closeness = closeness_spark_df.select(F.avg("closeness").cast("double")).first()[0]
     else:
@@ -89,6 +92,7 @@ def calculate_overall_network_metrics(vertices_df, edges_df, degree_df,
         "avg_degree": avg_degree,
         "avg_in_degree": avg_in_degree,
         "avg_out_degree": avg_out_degree,
+        "avg_pagerank": avg_pagerank,
         "avg_betweenness": avg_betweenness,
         "avg_closeness": avg_closeness
     }
@@ -166,7 +170,7 @@ def perform_yearly_analysis(year, citing_df, vertices_df, spark_session):
     
     # Calculate overall measures
     overall_metrics = calculate_overall_network_metrics(vertices_df, yearly_edges_df, 
-                                                        degree_df, in_degree_df, 
+                                                        degree_df, in_degree_df, pagerank_df,
                                                         out_degree_df, betweenness_spark_df, 
                                                         closeness_spark_df)
     overall_metrics["year"] = year
