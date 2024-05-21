@@ -3,13 +3,21 @@ from graphframes import GraphFrame
 import json
 import networkx as nx
 import pandas as pd
+import numpy as np
 from pyspark.sql import SparkSession
+from pyspark.ml.linalg import Vectors
 
 # Initialize Spark session
-def initialize_spark_session(name):
-    spark = SparkSession.builder \
-        .appName(name) \
-        .getOrCreate()
+def initialize_spark_session(name, set_local_directory=False):
+    if set_local_directory:
+        spark = SparkSession.builder \
+            .appName(name) \
+            .config("spark.local.dir", "spark_temp_dir") \
+            .getOrCreate()
+    else: 
+        spark = SparkSession.builder \
+            .appName(name) \
+            .getOrCreate()
     
     return spark
 
@@ -54,6 +62,7 @@ def calculate_betweenness_closeness_centrality(edges_df, spark_session):
     
     return betweenness_spark_df, closeness_spark_df
 
+# Calculate overall network metrics of the network ]
 def calculate_overall_network_metrics(vertices_df, edges_df, degree_df, 
                                       in_degree_df, out_degree_df, pagerank_df,
                                       betweenness_spark_df, closeness_spark_df):
@@ -73,7 +82,7 @@ def calculate_overall_network_metrics(vertices_df, edges_df, degree_df,
     avg_out_degree = out_degree_df.select(F.avg("outDegree").cast("double")).first()[0]
 
     # 4. Average pagerank
-    avg_pagerank = out_degree_df.select(F.avg("pagerank").cast("double")).first()[0]
+    avg_pagerank = pagerank_df.select(F.avg("pagerank").cast("double")).first()[0]
 
     # 6. Average betweenness
     if betweenness_spark_df.count() > 0:
@@ -102,6 +111,7 @@ def filter_edges_for_community(edges_df, community_vertices):
     community_vertices_set = set(community_vertices)
     return edges_df.filter(F.col("src").isin(community_vertices_set) & F.col("dst").isin(community_vertices_set))
 
+# Calculate network metrices for specific communities
 def calculate_community_metrics(vertices_with_communities, edges_df, spark_session):
     community_labels = vertices_with_communities.select("label").distinct().collect()
     community_labels = [row["label"] for row in community_labels]
@@ -175,3 +185,32 @@ def perform_yearly_analysis(year, citing_df, vertices_df, spark_session):
                                                         closeness_spark_df)
     overall_metrics["year"] = year
     return overall_metrics
+
+# Convert graphframe to networkx
+def graphframe_to_networkx_directed(gf):
+    nx_graph = nx.DiGraph()
+    for row in gf.vertices.collect():
+        nx_graph.add_node(row['id'])
+    for row in gf.edges.collect():
+        nx_graph.add_edge(row['src'], row['dst'], weight=row['count'])
+    return nx_graph
+
+# Combine structural and semantic embeddings
+def combine_vectors(abstract_vector, network_embedding):
+    # Convert lists to DenseVector if needed
+    if isinstance(abstract_vector, list):
+        abstract_vector = Vectors.dense(abstract_vector)
+    if isinstance(network_embedding, list):
+        network_embedding = Vectors.dense(network_embedding)
+    return Vectors.dense(abstract_vector.toArray().tolist() + network_embedding.toArray().tolist())
+
+# Calculate cosine distance between two vectors
+def cosine_similarity(vec1, vec2):
+    return np.dot(vec1, vec2) / (np.linalg.norm(vec1) * np.linalg.norm(vec2))
+
+# Calculate knowledge exploration distance
+def ked(citing_vector, cited_vectors):
+    if cited_vectors is None or len(cited_vectors) == 0:
+        return None
+    distances = [1 - cosine_similarity(citing_vector, vec) for vec in cited_vectors]
+    return np.mean(distances)
