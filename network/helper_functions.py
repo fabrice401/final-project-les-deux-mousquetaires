@@ -62,33 +62,27 @@ def calculate_overall_network_metrics(vertices_df, edges_df, degree_df,
     possible_edges = num_nodes * (num_nodes - 1)
     num_actual_edges = edges_df.count()
     network_density = float(num_actual_edges) / possible_edges if possible_edges != 0 else 0.0
-    print(f"Network Density: {network_density}")
 
     # 2. Average degree
     avg_degree = degree_df.select(F.avg("degree").cast("double")).first()[0]
-    print(f"Network Average Degree: {avg_degree}")
 
     # 3. Average in-degree
     avg_in_degree = in_degree_df.select(F.avg("inDegree").cast("double")).first()[0]
-    print(f"Network Average In-Degree: {avg_in_degree}")
 
     # 4. Average out-degree
     avg_out_degree = out_degree_df.select(F.avg("outDegree").cast("double")).first()[0]
-    print(f"Network Average Out-Degree: {avg_out_degree}")
 
     # 5. Average betweenness
     if betweenness_spark_df.count() > 0:
         avg_betweenness = betweenness_spark_df.select(F.avg("betweenness").cast("double")).first()[0]
     else:
         avg_betweenness = 0.0
-    print(f"Network Average Betweenness: {avg_betweenness}")
 
     # 6. Average closeness
     if closeness_spark_df.count() > 0:
         avg_closeness = closeness_spark_df.select(F.avg("closeness").cast("double")).first()[0]
     else:
         avg_closeness = 0.0
-    print(f"Network Average Closeness: {avg_closeness}")
 
     return {
         "network_density": network_density,
@@ -145,3 +139,35 @@ def calculate_community_metrics(vertices_with_communities, edges_df, spark_sessi
     metrics_df = spark_session.createDataFrame(metrics_list)
     
     return metrics_df
+
+# Perform yearly analysis on the patent citation network to derive network measures
+def perform_yearly_analysis(year, citing_df, vertices_df, spark_session):
+    yearly_edges_df = citing_df.filter(F.col("year") == year).groupBy(
+        F.col("citing_assignee").alias("src"), # "source"
+        F.col("cited_assignee").alias("dst") # "destination"
+    ).count()
+    
+    if yearly_edges_df.count() == 0:
+        return None
+    
+    # Create the GraphFrame with vertices and edges
+    g = GraphFrame(vertices_df, yearly_edges_df)
+    
+    # Calculate degree centrality
+    degree_df, in_degree_df, out_degree_df = calculate_degree_centrality(g)
+    
+    # Calculate PageRank centrality
+    pagerank_df = calculate_pagerank_centrality(g)
+    
+    # Calculate betweenness and closeness centrality
+    betweenness_spark_df, closeness_spark_df = calculate_betweenness_closeness_centrality(
+        yearly_edges_df, spark_session=spark_session
+    )
+    
+    # Calculate overall measures
+    overall_metrics = calculate_overall_network_metrics(vertices_df, yearly_edges_df, 
+                                                        degree_df, in_degree_df, 
+                                                        out_degree_df, betweenness_spark_df, 
+                                                        closeness_spark_df)
+    overall_metrics["year"] = year
+    return overall_metrics
