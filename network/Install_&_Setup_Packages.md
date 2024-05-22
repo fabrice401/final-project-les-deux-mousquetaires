@@ -36,7 +36,7 @@ To use it for sinteractive:
 # Initiate sinteractive
 sinteractive --ntasks=10 --account=macs30123
 
-module load python spark mkl
+module load python spark
 
 export PYSPARK_DRIVER_PYTHON=/software/python-anaconda-2022.05-el8-x86_64/bin/python3
 # Export the LD_LIBRARY_PATH to include the directory that stores `libmkl_rt.so.1` file
