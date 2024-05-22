@@ -98,7 +98,7 @@ From 2 to 11 clusters, there is a significant drop in SSE, which means that the 
 
 We analyzed each cluster by examining the top 50 keywords for each cluster. These keywords were then inputted into ChatGPT to generate a detailed description representing each cluster.
 
-| Cluster | English Description                                       | Detailed  Description                                                                                           |
+| Cluster | Cluster Name                                       | Detailed  Description                                                                                           |
 | ------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | 0       | Intelligent Data Processing and Machine Learning Systems  | This cluster includes systems and technologies focused on intelligent data processing and the application of machine learning algorithms to derive insights and automate decision-making processes. |
 | 1       | 3D Point Cloud Processing and LiDAR Applications          | This cluster encompasses technologies related to the processing of 3D point cloud data and applications utilizing LiDAR for mapping, navigation, and environmental scanning. |
