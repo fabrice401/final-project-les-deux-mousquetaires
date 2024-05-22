@@ -16,10 +16,21 @@ Data preparation
 '''
 
 spark = initialize_spark_session(name='Patent Network Analysis (Patent Network)',
+                                 memory_size='4g',
                                  set_local_directory=True)
 # Load the patent data
-file_path = "../data_cleaning/patent_data_example.csv"
+file_path = "../data_cleaning/patent_data.csv"
 patent_df = spark.read.csv(file_path, header=True, inferSchema=True)
+
+# Convert the 'date' column to DateType
+patent_df = patent_df.withColumn("date", F.to_date(F.col("date"), "yyyy-MM-dd"))
+
+# Add year and quarter columns
+patent_df = patent_df.withColumn("year", F.year(F.col("date")))
+patent_df = patent_df.withColumn("quarter", F.quarter(F.col("date")))
+
+# Combine year and quarter into a single column formatted as 'YYYYQX'
+patent_df = patent_df.withColumn("year_quarter", F.concat(F.col("year"), F.lit("Q"), F.col("quarter")))
 
 # Register the function as a UDF
 parse_citedby_udf = F.udf(parse_citedby, "array<struct<citing_id:string, citing_assignee:string>>")
@@ -58,14 +69,17 @@ citing_df = formatted_citing_df.select(
 '''
 Network Construction
 '''
-# Create vertices DataFrame with unique assignees
-vertices_df = patent_df.select(F.col("id")).distinct()
+# Create vertices DataFrame with unique assignees and remove NA values
+vertices_df = patent_df.select(F.col("id")).distinct().dropna()
 
 # Create edges DataFrame for citation relationships between assignees
 edges_df = citing_df.groupBy(
     F.col("citing_id").alias("src"),
     F.col("cited_id").alias("dst")
 ).count()
+
+# Remove NA values from edges DataFrame as well
+edges_df = edges_df.dropna()
 
 # Create the GraphFrame with vertices and edges
 g = GraphFrame(vertices_df, edges_df)
@@ -90,7 +104,9 @@ Patent Vectorization (Word2Vec)
 # Tokenize the abstract column
 tokenizer = Tokenizer(inputCol="abstract", outputCol="words")
 words_df = tokenizer.transform(patent_df.filter(patent_df.abstract.isNotNull()))
-words_df = words_df.select("id", "words", "classification", "assignee")
+# Change it later!!!
+# words_df = words_df.select("id", "words", "classification", "assignee")
+words_df = words_df.select("id", "words", "classification")
 
 # Train Word2Vec model on abstracts
 word2vec = Word2Vec(inputCol="words", outputCol="abstract_vector", vectorSize=128, minCount=0)
@@ -125,6 +141,12 @@ grouped_df = joined_df.groupBy("citing_id", "citing_vector").agg(F.collect_list(
 # Calculate KED for each citing_id
 ked_df = grouped_df.withColumn("ked", ked_udf(F.col("citing_vector"), F.col("cited_vectors")))
 
+# # Add year_quarter and cluster level to the KED DataFrame
+# ked_df = ked_df.join(patent_df.select("id", "year_quarter"), ked_df.citing_id == patent_df.id)
+
+# # Group by year_quarter and cluster level and calculate the average KED for each group
+# average_ked_by_group = ked_df.groupBy("year_quarter").agg(F.avg("ked").alias("average_ked"))
+
 # Calculate the average KED
 average_ked = ked_df.agg({"ked": "avg"}).collect()[0][0]
 print("Average Knowledge Exploration Distance:", average_ked)
@@ -133,7 +155,6 @@ print("Average Knowledge Exploration Distance:", average_ked)
 top_ked = ked_df.orderBy(F.col("ked").desc()).select("citing_id", "ked").show(10)
 
 # Correlation analysis? 
-
 '''
 Terminate the spark session 
 '''
