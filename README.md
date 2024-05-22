@@ -13,7 +13,6 @@ Specifically, after initializng the selenium drive, we used to following code to
 url = f'https://patents.google.com/?q=(artificial+intelligence)&country=US&before=publication:{before_date}&after=publication:{after_date}&language=ENGLISH&type=PATENT'
 ```
 
-
 Following that, we waited for the links (for each patent) to be clickable and then clicked them to download the csv file:
 ```python
 # Download csv files of patent data for each month
@@ -40,5 +39,15 @@ As shown in the `all_patents_link.csv` file on shared Google Drive, the csv file
 | `grant date`                    | The date on which the patent was granted.                                                        |
 | `result link`                   | The URL link to the detailed information about the patent on Google Patents.                      |
 | `representative figure link`    | The URL link to the representative figure or image of the patent.                                |
+
+We then used `request` package to retreive the details (e.g., paper abstract, classification, citation records) of each patent based on the `result link` column in `all_patents_link.csv` file above (see an example of webpage accessed from the `result link`):
+
+![](screenshots/Example_Patent_Detail_Page.png)
+
+As shown in [`scrape_each_patent_linux_local.py` file](scraping/scrape_each_patent_linux_local.py), we scraped text of `request` responses and uploaded individual text files to aws s3 bucket (given the large )
+
+The strategic choice of scraping twice (one using `selenium` and the other using `request`)
+why use midway
+also why upload to aws s3
 
 Use request to scrape abstract and classification from the URL link to detailed information about the patent (see figure of example below):
