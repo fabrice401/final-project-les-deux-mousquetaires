@@ -2,6 +2,12 @@
 from helper_functions import * 
 
 '''
+Suppress user warning message in .out file
+'''
+import warnings
+warnings.filterwarnings("ignore", category=UserWarning)
+
+'''
 Prepare data for constructing the network 
 '''
 
@@ -57,3 +63,8 @@ yearly_metrics_df.show()
 # yearly_metrics_df.write.csv(output_path, header=True)
 
 # print(f"Yearly metrics saved to {output_path}")
+
+'''
+Terminate the spark session 
+'''
+spark.stop()
