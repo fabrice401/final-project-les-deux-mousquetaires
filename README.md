@@ -1,6 +1,9 @@
 # final-project-les-deux-mousquetaires
-[Later change it for brief overview of the project]
-This is the final project for MACS 30123 course Large-Scale Computing for the Social Sciences owned by Guankun Li and Tianyue Cong.
+This is the final project for MACS 30123 course Large-Scale Computing for the Social Sciences owned by Guankun Li and Tianyue Cong. In this project, we utilized high performance computing techniques to scrape information about patents in the field of artifical intelligence (between 2019 and 2023) and conduct large-scale analysis, including clustering and network analysis, to explore the research (patent) trend in the field of artifical intelligence and the citation patterns during this period.
+
+To do:
+
+Canvas Repo Requirements: [describing a social science research problem, justification of the importance of using scalable computing methods to solve it, as well as a description of the large-scale computing methods you employ in the project.]
 
 ## Scraping
 We chose to scrape the patents related to artifical intelligence from 2019 to 2023 using [Google Patents](https://patents.google.com/). We used midway3 to download a total of 382071 individual patents related to artifical intelligence (see [`download_patent_midway.py`](scraping/download_patent_midway.py) file). 
