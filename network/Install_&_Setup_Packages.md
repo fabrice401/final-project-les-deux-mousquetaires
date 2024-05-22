@@ -35,6 +35,7 @@ To use it for sinteractive:
 ```bash
 # Initiate sinteractive
 sinteractive --ntasks=10 --account=macs30123
+# sinteractive --nodes=2 --ntasks=10 --account=macs30123 --waittime==24:00:00
 
 module load python spark
 
