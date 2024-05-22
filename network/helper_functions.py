@@ -8,7 +8,12 @@ from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
 
 # Initialize Spark session
-def initialize_spark_session(name, memory_size="1g", set_local_directory=False):
+def initialize_spark_session(name, memory_size="4g", set_local_directory=False, num_partitions=200, checkpoint_dir="spark_checkpoints"):
+    # Stop the existing Spark session if any
+    existing_spark = SparkSession.builder.getOrCreate()
+    if existing_spark:
+        existing_spark.stop()
+
     builder = SparkSession.builder.appName(name)
     
     if set_local_directory:
@@ -17,9 +22,24 @@ def initialize_spark_session(name, memory_size="1g", set_local_directory=False):
     if memory_size:
         builder = builder.config("spark.executor.memory", memory_size)
         builder = builder.config("spark.driver.memory", memory_size)
+        builder = builder.config("spark.memory.fraction", "0.8")  # Set the fraction of heap space used for execution and storage
+        builder = builder.config("spark.memory.storageFraction", "0.2")  # Set the fraction of (spark.memory.fraction) used for storage
 
+    # Set the number of partitions
+    builder = builder.config("spark.sql.shuffle.partitions", num_partitions)
+    
+    # Enable checkpointing
     spark = builder.getOrCreate()
+    spark.sparkContext.setCheckpointDir(checkpoint_dir)
+    
     return spark
+
+def repartition_df(df, num_partitions):
+    return df.repartition(num_partitions)
+
+def checkpoint_df(df):
+    df = df.checkpoint()
+    return df
 
 # Define a function to parse the 'citedby' column (to retrieve assignee info)
 def parse_citedby(citedby):
