@@ -93,7 +93,7 @@ Based on the elbow plot, the optimal number of clusters is determined by identif
 
 From 2 to 12 clusters, there is a significant drop in SSE, which means that the data is being divided into more homogenous groups effectively. At 12 clusters, the plot shows a noticeable change in the slope, forming an "elbow." This indicates that 12 clusters is a turning point where adding more clusters does not significantly improve the model. Beyond 12 clusters, the SSE continues to decrease, but the rate of decrease slows down considerably. This suggests that the additional clusters are not providing substantial gains in reducing within-cluster variance. Choosing 12 as the optimal number of clusters strikes a balance between model complexity and clustering performance, ensuring meaningful and distinct groupings without overfitting the data. 
 
-![](NLP/elbow_plot_keywords.png)
+![](NLP_clustering/elbow_plot_keywords.png)
 
 
 We analyzed each cluster by examining the top 50 keywords for each cluster. These keywords were then inputted into ChatGPT to generate a detailed description representing each cluster.
@@ -119,7 +119,7 @@ To provide a clearer visualization of the contents of each cluster, we have gene
 
 Across all clusters, the word clouds consistently reflect the main themes identified in the cluster names. For instance, clusters related to document management prominently feature terms like "document" and "text," while those focused on user interaction highlight words such as "user" and "content." This consistency demonstrates that our clustering and naming process effectively captures the key topics and technological areas represented in the patent abstracts.
 
-![](NLP/wordcloud.png)
+![](NLP_clustering/wordcloud.png)
 
 ### Quantity and Quality of Patents
 
@@ -131,7 +131,7 @@ The second chart, which shows the average quality of patents based on citations 
 
 The combined analysis from both charts reveals a nuanced landscape. For example, while "User Interaction and Content Management" has the highest number of patents, its average quality is moderate, indicating a large volume but not necessarily high-impact patents. Conversely, "Authentication and Security," with fewer patents, shows exceptional quality, highlighting the importance of considering both quantity and quality for a comprehensive understanding of patent landscapes.
 
-![](NLP/quan_quality.png)
+![](NLP_clustering/quan_quality.png)
 
 ## Analysis of AI Patent Trends
 
@@ -153,7 +153,7 @@ The trend analysis focuses on the top three clusters with the highest number of 
    - **Trend**: The number of patents in this cluster has significantly increased, showing a robust upward trajectory from Q1 2019 to Q4 2023.
    - **Analysis**: The growth in patents related to user interaction and content management suggests that this area is becoming increasingly important as digital and smart technologies evolve. Innovations in user interfaces and content management systems are essential for enhancing user experience and managing the growing volumes of digital content effectively.
 
-![](NLP/trend1.png)
+![](NLP_clustering/trend1.png)
 
 #### 
 Clusters 8, 1, and 4 were removed from the trend analysis to provide a clearer view of the remaining clusters' trends. These clusters had significantly higher numbers of patents, which could obscure the trends in clusters with fewer patents.
@@ -164,4 +164,4 @@ The trends for the remaining clusters indicate that the number of patents in eac
   - **Trend**: This cluster shows the highest number of patents among the remaining clusters. There is a steady increase from around 200 patents in early 2019 to over 500 patents by the end of 2023.
   - **Analysis**: The growth in Cluster 9 suggests a strong and continuous interest in feature extraction and machine learning technologies. This area is foundational to many AI applications, which likely drives the sustained increase in patent filings.
 
-![](NLP/trend2.png)
+![](NLP_clustering/trend2.png)
