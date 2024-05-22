@@ -3,7 +3,9 @@ This is the final project for MACS 30123 course Large-Scale Computing for the So
 
 To do:
 
-Canvas Repo Requirements: [describing a social science research problem, justification of the importance of using scalable computing methods to solve it, as well as a description of the large-scale computing methods you employ in the project.]
+Canvas Repo Requirements: 
+1. describing a social science research problem, justification of the importance of using scalable computing methods to solve it, as well as a description of the large-scale computing methods you employ in the project (1000 words minimum);
+2. state the responsibilities of each group member in your README.
 
 ## Scraping
 We chose to scrape the patents related to artifical intelligence from 2019 to 2023 using [Google Patents](https://patents.google.com/). We used midway3 to download a total of 382071 individual patents related to artifical intelligence (see [`download_patent_midway.py`](scraping/download_patent_midway.py) file). 
