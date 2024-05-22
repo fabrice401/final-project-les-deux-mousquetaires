@@ -8,7 +8,7 @@ from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
 
 # Initialize Spark session
-def initialize_spark_session(name, memory_size="4g", set_local_directory=False, num_partitions=200, checkpoint_dir="spark_checkpoints"):
+def initialize_spark_session(name, memory_size="64g", set_local_directory=False, num_partitions=200, checkpoint_dir="spark_checkpoints"):
     # Stop the existing Spark session if any
     existing_spark = SparkSession.builder.getOrCreate()
     if existing_spark:
@@ -24,6 +24,9 @@ def initialize_spark_session(name, memory_size="4g", set_local_directory=False, 
         builder = builder.config("spark.driver.memory", memory_size)
         builder = builder.config("spark.memory.fraction", "0.8")  # Set the fraction of heap space used for execution and storage
         builder = builder.config("spark.memory.storageFraction", "0.2")  # Set the fraction of (spark.memory.fraction) used for storage
+        builder = builder.config("spark.executor.heartbeatInterval", "20s")
+        builder = builder.config("spark.network.timeout", "300s")
+        builder = builder.config("spark.storage.memoryFraction", "0.4")
 
     # Set the number of partitions
     builder = builder.config("spark.sql.shuffle.partitions", num_partitions)
