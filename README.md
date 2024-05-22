@@ -96,7 +96,7 @@ From 2 to 11 clusters, there is a significant drop in SSE, which means that the 
 ![](NLP/elbow_plot_keywords.png)
 
 
-I analyzed each cluster by examining the top 50 keywords for each cluster. These keywords were then inputted into ChatGPT to generate a detailed description representing each cluster.
+We analyzed each cluster by examining the top 50 keywords for each cluster. These keywords were then inputted into ChatGPT to generate a detailed description representing each cluster.
 
 | Cluster | English Description                                       | Detailed  Description                                                                                           |
 | ------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
