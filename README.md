@@ -121,6 +121,18 @@ Across all clusters, the word clouds consistently reflect the main themes identi
 
 ![](NLP/wordcloud.png)
 
+### Quantity and Quality of Patents
+
+We further analyzed the AI patents in different clusters in terms of quantity and quality. Quantity is measured by the number of patents within each cluster, while quality is determined by the average number of citations per patent in each cluster. The results are presented in two bar charts: the first chart displays the number of patents per cluster, and the second chart shows the average quality of patents based on citations.
+
+The first chart reveals significant disparities in the number of patents across clusters. Notably, "User Interaction and Content Management" and "Signal Processing and Wireless Communication" exhibit the highest patent counts, with "User Interaction and Content Management" leading by a substantial margin. This indicates a higher concentration of patents in these clusters, possibly reflecting areas of intense research and development activity. In contrast, clusters such as "Sample Analysis and Training Models," "Virtual Reality and Augmented Reality," and "Authentication and Security" have notably fewer patents, suggesting either niche fields or areas with less research focus.
+
+The second chart, which shows the average quality of patents based on citations per patent, provides a different perspective. Interestingly, "Authentication and Security" stands out with the highest average quality, indicating that, despite having fewer patents, the patents in this cluster are highly influential. "Virtual Reality and Augmented Reality" and "Signal Processing and Wireless Communication" also demonstrate high average quality, suggesting that patents in these clusters are well-cited and possibly more impactful.
+
+The combined analysis from both charts reveals a nuanced landscape. For example, while "User Interaction and Content Management" has the highest number of patents, its average quality is moderate, indicating a large volume but not necessarily high-impact patents. Conversely, "Authentication and Security," with fewer patents, shows exceptional quality, highlighting the importance of considering both quantity and quality for a comprehensive understanding of patent landscapes.
+
+![](NLP/quan_quality.png)
+
 ## Analysis of AI Patent Trends
 
 #### Removal of Cluster 0
