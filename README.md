@@ -113,4 +113,8 @@ We analyzed each cluster by examining the top 50 keywords for each cluster. Thes
 | 10      | Financial Transactions and Payment Systems | Deals with handling financial transactions and payment systems. |
 | 11      | Audio Processing and Speech Recognition | Encompasses audio processing and speech recognition technologies. |
 
+Trend for each cluster
 
+![](NLP/trend1.png)
+
+![](NLP/trend2.png)
