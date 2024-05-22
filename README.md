@@ -1,10 +1,11 @@
 # final-project-les-deux-mousquetaires
+[Later change it for brief overview of the project]
 This is the final project for MACS 30123 course Large-Scale Computing for the Social Sciences owned by Guankun Li and Tianyue Cong.
 
 ## Scraping
 We chose to scrape the patents related to artifical intelligence from 2019 to 2023 using [Google Patents](https://patents.google.com/). We used midway3 to download a total of 382071 individual patents related to artifical intelligence (see [`download_patent_midway.py`](scraping/download_patent_midway.py) file). 
 
-Underlying this python script, we utilized `selenium` package to dyanmically **search** and **download** relevant patent records to `all_patents_link.csv` file on [shared Google Drive](https://drive.google.com/drive/u/0/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?ths=true) file. See the [figure of example](screenshots/Selenium_Scraping.png) below: 
+Underlying this python script, we utilized `selenium` package to dyanmically **search** and **download** relevant patent records to `all_patents_link.csv` file on [shared Google Drive](https://drive.google.com/drive/u/0/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?ths=true). See the [figure of example](screenshots/Selenium_Scraping.png) below: 
 
 ![](screenshots/Selenium_Scraping.png)
 
@@ -13,7 +14,7 @@ Specifically, after initializng the selenium drive, we used to following code to
 url = f'https://patents.google.com/?q=(artificial+intelligence)&country=US&before=publication:{before_date}&after=publication:{after_date}&language=ENGLISH&type=PATENT'
 ```
 
-Following that, we waited for the links (for each patent) to be clickable and then clicked them to download the csv file:
+Afterwards, we waited for the links (for each patent) to be clickable and then clicked them to download the csv file:
 ```python
 # Download csv files of patent data for each month
 download_css_selector = "a[href*='download=true'] iron-icon[icon='icons:file-download']"
@@ -44,10 +45,37 @@ We then used `request` package to retreive the details (e.g., paper abstract, cl
 
 ![](screenshots/Example_Patent_Detail_Page.png)
 
-As shown in [`scrape_each_patent_linux_local.py` file](scraping/scrape_each_patent_linux_local.py), we scraped text of `request` responses and uploaded individual text files to aws s3 bucket (given the large )
+As shown in [`scrape_each_patent_linux_local.py` file](scraping/scrape_each_patent_linux_local.py), we scraped text of `request` responses and uploaded individual text files to aws s3 bucket (given the large file size of all patent records combined). 
 
-The strategic choice of scraping twice (one using `selenium` and the other using `request`)
-why use midway
-also why upload to aws s3
+The strategic choice of scraping twice (one using `selenium` and the other using `request`) is due to the fact that it is very likely to be detected as a bot when clicking the links to patent details (given the very large number of patents). Although we tried writing aws lambda functions to scrape patent details, the 4-hour limit of our aws account makes it cumbersome to restart aws lab and update aws credentials multiple times given the large number of patents to scrape.
 
-Use request to scrape abstract and classification from the URL link to detailed information about the patent (see figure of example below):
+## Data Cleaning
+An important step after scraping is converting all patent records (stored on s3 bucket) to a csv file. To extract relevant information from the 382071 individual patents, we utlizied Message Passing Interface (MPI) to access all objects in our s3 buckets and extract information including patent id, patent abstract, classification, timeline, citation records, and legal events into a concatenated csv (see below):
+```python
+# Format of dataframe storing patent information
+df = pd.DataFrame({
+        'id': [file_id],
+        'abstract': [abstract],
+        'classification': classifications,
+        'timeline': [str(timeline_dict)],
+        'citedby': [str(cited_by_dict)],
+        'legal': [str(legal_events_dict)]
+    })
+```
+```python
+# Gather all DataFrames at the root process
+    all_dfs = comm.gather(local_df, root=0)
+    
+    if rank == 0:
+        print("Combining all DataFrames...")
+        final_df = pd.concat(all_dfs, ignore_index=True)
+        final_df.to_csv('patent_data.csv', index=False)
+        print("Data saved to CSV successfully")
+```
+
+For more details on this step, please refer to [`s3_download_txt_to_csv_mpi.py`](data_cleaning/s3_download_txt_to_csv_mpi.py) file (**NOTE**: we also included a version of python script that does not utilize parallel processing; see [`txt_to_csv.py`](data_cleaning/txt_to_csv.py) file). To perform this operation, we submitted the [`mpi.sbatch`](data_cleaning/mpi.sbatch) sbatch file to midway:
+```bash
+sbatch data_cleaning/mpi.sbatch
+```
+
+After having this csv, we joined it with the `all_patents_link.csv` file to incorporate the finest details of each patent for later analysis. Named as `all_patent_info.csv`, this combined dataframe is saved on [shared Google Drive](https://drive.google.com/drive/u/0/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?ths=true)) and lays the foundation for our later analysis. 
