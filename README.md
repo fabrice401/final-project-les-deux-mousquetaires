@@ -89,26 +89,28 @@ After having this csv, we joined it with the `all_patents_link.csv` file to inco
 
 ## Clustering
 
-Based on the elbow plot, the optimal number of clusters is determined by identifying the point where the decrease in the sum of squared errors (SSE) starts to slow down, forming an "elbow" shape. This point indicates diminishing returns in reducing SSE with the addition of more clusters. In your elbow plot, there is a noticeable "elbow" at around 11 clusters. Up to this point, the SSE decreases significantly as the number of clusters increases, indicating substantial improvements in cluster homogeneity. After 11 clusters, the rate of SSE reduction diminishes, suggesting that adding more clusters provides only marginal improvements.
+Based on the elbow plot, the optimal number of clusters is determined by identifying the point where the decrease in the sum of squared errors (SSE) starts to slow down, forming an "elbow" shape. This point indicates diminishing returns in reducing SSE with the addition of more clusters. In your elbow plot, there is a noticeable "elbow" at around 12 clusters. Up to this point, the SSE decreases significantly as the number of clusters increases, indicating substantial improvements in cluster homogeneity. After 12 clusters, the rate of SSE reduction diminishes, suggesting that adding more clusters provides only marginal improvements.
 
-From 2 to 11 clusters, there is a significant drop in SSE, which means that the data is being divided into more homogenous groups effectively. At 11 clusters, the plot shows a noticeable change in the slope, forming an "elbow." This indicates that 11 clusters is a turning point where adding more clusters does not significantly improve the model. Beyond 11 clusters, the SSE continues to decrease, but the rate of decrease slows down considerably. This suggests that the additional clusters are not providing substantial gains in reducing within-cluster variance. Choosing 11 as the optimal number of clusters strikes a balance between model complexity and clustering performance, ensuring meaningful and distinct groupings without overfitting the data. 
+From 2 to 12 clusters, there is a significant drop in SSE, which means that the data is being divided into more homogenous groups effectively. At 12 clusters, the plot shows a noticeable change in the slope, forming an "elbow." This indicates that 12 clusters is a turning point where adding more clusters does not significantly improve the model. Beyond 12 clusters, the SSE continues to decrease, but the rate of decrease slows down considerably. This suggests that the additional clusters are not providing substantial gains in reducing within-cluster variance. Choosing 12 as the optimal number of clusters strikes a balance between model complexity and clustering performance, ensuring meaningful and distinct groupings without overfitting the data. 
 
 ![](NLP/elbow_plot_keywords.png)
 
 
 We analyzed each cluster by examining the top 50 keywords for each cluster. These keywords were then inputted into ChatGPT to generate a detailed description representing each cluster.
 
-| Cluster | Cluster Name                                       | Detailed  Description                                                                                           |
-| ------- | --------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- |
-| 0       | Intelligent Data Processing and Machine Learning Systems  | This cluster includes systems and technologies focused on intelligent data processing and the application of machine learning algorithms to derive insights and automate decision-making processes. |
-| 1       | 3D Point Cloud Processing and LiDAR Applications          | This cluster encompasses technologies related to the processing of 3D point cloud data and applications utilizing LiDAR for mapping, navigation, and environmental scanning. |
-| 2       | Audio and Speech Processing Systems                       | This cluster contains systems and technologies for processing audio signals and speech, including speech recognition, synthesis, and audio enhancement. |
-| 3       | Support Systems and Medical Devices                       | This cluster includes various support systems and medical devices designed to assist in healthcare delivery, patient monitoring, and diagnostic procedures. |
-| 4       | File Management and Data Processing Systems               | This cluster focuses on technologies and systems for efficient file management, data storage, retrieval, and processing to support various applications. |
-| 5       | Entity Recognition and Knowledge Graph Systems            | This cluster comprises systems that perform entity recognition and construct knowledge graphs to enable sophisticated data relationships and contextual understanding. |
-| 6       | Wireless Communication and Device Control Systems         | This cluster involves technologies for wireless communication and systems for remote control and monitoring of various devices. |
-| 7       | IoT Devices and Edge Computing                            | This cluster includes Internet of Things (IoT) devices and edge computing technologies that enable decentralized data processing close to the data source. |
-| 8       | Semiconductor Devices and Material Technologies           | This cluster focuses on advancements in semiconductor devices and material technologies essential for developing new electronic components. |
-| 9       | Task Management and Machine Learning Systems              | This cluster includes systems for managing tasks and integrating machine learning models to optimize workflow and enhance productivity. |
-| 10      | Image Processing and Data Analysis Systems                | This cluster contains technologies and systems for processing images and performing data analysis to extract meaningful information and insights. |
+| Cluster | Cluster Name                         | Description                                      |
+|---------|--------------------------------------|--------------------------------------------------|
+| 0       | General Machine Learning and Systems | Focuses on general machine learning methods and system configurations. |
+| 1       | Image Processing and Recognition     | Involves techniques for processing and recognizing images. |
+| 2       | Document Management and Text Processing | Pertains to handling and analyzing text and documents. |
+| 3       | Sample Analysis and Training Models  | Covers methods for analyzing samples and training models. |
+| 4       | User Interaction and Content Management | Deals with user interfaces and content management systems. |
+| 5       | Virtual Reality and Augmented Reality | Encompasses technologies related to virtual and augmented reality. |
+| 6       | Resource Management and Communication | Involves management of resources and communication systems. |
+| 7       | Authentication and Security          | Focuses on user authentication and security measures. |
+| 8       | Signal Processing and Wireless Communication | Pertains to processing signals and wireless communication technologies. |
+| 9       | Feature Extraction and Machine Learning | Involves extracting features and applying machine learning techniques. |
+| 10      | Financial Transactions and Payment Systems | Deals with handling financial transactions and payment systems. |
+| 11      | Audio Processing and Speech Recognition | Encompasses audio processing and speech recognition technologies. |
+
 
