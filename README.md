@@ -86,3 +86,11 @@ cd ..
 ```
 
 After having this csv, we joined it with the `all_patents_link.csv` file to incorporate the finest details of each patent for later analysis. Named as `all_patent_info.csv`, this combined dataframe is saved on [shared Google Drive](https://drive.google.com/drive/u/0/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?ths=true)) and lays the foundation for our later analysis. 
+
+## Clustering
+
+Based on the elbow plot, the optimal number of clusters is determined by identifying the point where the decrease in the sum of squared errors (SSE) starts to slow down, forming an "elbow" shape. This point indicates diminishing returns in reducing SSE with the addition of more clusters. In your elbow plot, there is a noticeable "elbow" at around 11 clusters. Up to this point, the SSE decreases significantly as the number of clusters increases, indicating substantial improvements in cluster homogeneity. After 11 clusters, the rate of SSE reduction diminishes, suggesting that adding more clusters provides only marginal improvements.
+
+From 2 to 11 clusters, there is a significant drop in SSE, which means that the data is being divided into more homogenous groups effectively. At 11 clusters, the plot shows a noticeable change in the slope, forming an "elbow." This indicates that 11 clusters is a turning point where adding more clusters does not significantly improve the model. Beyond 11 clusters, the SSE continues to decrease, but the rate of decrease slows down considerably. This suggests that the additional clusters are not providing substantial gains in reducing within-cluster variance. Choosing 11 as the optimal number of clusters strikes a balance between model complexity and clustering performance, ensuring meaningful and distinct groupings without overfitting the data. 
+
+![](NLP/elbow_plot_keywords.png)
