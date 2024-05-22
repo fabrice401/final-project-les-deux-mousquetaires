@@ -8,17 +8,17 @@ from pyspark.sql import SparkSession
 from pyspark.ml.linalg import Vectors
 
 # Initialize Spark session
-def initialize_spark_session(name, set_local_directory=False):
-    if set_local_directory:
-        spark = SparkSession.builder \
-            .appName(name) \
-            .config("spark.local.dir", "spark_temp_dir") \
-            .getOrCreate()
-    else: 
-        spark = SparkSession.builder \
-            .appName(name) \
-            .getOrCreate()
+def initialize_spark_session(name, memory_size="1g", set_local_directory=False):
+    builder = SparkSession.builder.appName(name)
     
+    if set_local_directory:
+        builder = builder.config("spark.local.dir", "spark_temp_dir")
+    
+    if memory_size:
+        builder = builder.config("spark.executor.memory", memory_size)
+        builder = builder.config("spark.driver.memory", memory_size)
+
+    spark = builder.getOrCreate()
     return spark
 
 # Define a function to parse the 'citedby' column (to retrieve assignee info)
