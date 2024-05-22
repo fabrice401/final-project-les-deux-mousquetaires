@@ -64,18 +64,20 @@ df = pd.DataFrame({
 ```
 ```python
 # Gather all DataFrames at the root process
-    all_dfs = comm.gather(local_df, root=0)
-    
-    if rank == 0:
-        print("Combining all DataFrames...")
-        final_df = pd.concat(all_dfs, ignore_index=True)
-        final_df.to_csv('patent_data.csv', index=False)
-        print("Data saved to CSV successfully")
+all_dfs = comm.gather(local_df, root=0)
+
+if rank == 0:
+    print("Combining all DataFrames...")
+    final_df = pd.concat(all_dfs, ignore_index=True)
+    final_df.to_csv('patent_data.csv', index=False)
+    print("Data saved to CSV successfully")
 ```
 
 For more details on this step, please refer to [`s3_download_txt_to_csv_mpi.py`](data_cleaning/s3_download_txt_to_csv_mpi.py) file (**NOTE**: we also included a version of python script that does not utilize parallel processing; see [`txt_to_csv.py`](data_cleaning/txt_to_csv.py) file). To perform this operation, we submitted the [`mpi.sbatch`](data_cleaning/mpi.sbatch) sbatch file to midway:
 ```bash
-sbatch data_cleaning/mpi.sbatch
+cd data_cleaning
+sbatch mpi.sbatch
+cd ..
 ```
 
 After having this csv, we joined it with the `all_patents_link.csv` file to incorporate the finest details of each patent for later analysis. Named as `all_patent_info.csv`, this combined dataframe is saved on [shared Google Drive](https://drive.google.com/drive/u/0/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?ths=true)) and lays the foundation for our later analysis. 
