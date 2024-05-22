@@ -14,7 +14,7 @@ Prepare data for constructing the network
 spark = initialize_spark_session(name='Patent Network Analysis (Assignee Network By Year)')
 
 # Load the patent data
-file_path = "../data_cleaning/patent_data_example.csv"
+file_path = "../data_cleaning/all_patent_info.csv"
 patent_df = spark.read.csv(file_path, header=True, inferSchema=True)
 
 # Register the function as a UDF
