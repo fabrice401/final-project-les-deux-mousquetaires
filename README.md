@@ -113,8 +113,37 @@ We analyzed each cluster by examining the top 50 keywords for each cluster. Thes
 | 10      | Financial Transactions and Payment Systems | Deals with handling financial transactions and payment systems. |
 | 11      | Audio Processing and Speech Recognition | Encompasses audio processing and speech recognition technologies. |
 
-Trend for each cluster
+Sure, here's the revised analysis in English, focusing on the removal of Cluster 0 and the analysis of the top three clusters' trends:
+
+## Analysis of AI Patent Trends
+
+#### Removal of Cluster 0
+Cluster 0, "General Machine Learning and Systems," was removed from the trend analysis because it is too broad and can be further subdivided into more specific categories. This broad categorization does not provide actionable insights into the particular advancements and trends within the various subfields of AI. By excluding Cluster 0, we can focus more accurately on specific technological developments and their trajectories.
+
+#### Trend Analysis of the Top Three Clusters
+The trend analysis focuses on the top three clusters with the highest number of patents over time, which are Cluster 8, Cluster 1, and Cluster 4.
+
+1. **Cluster 8 (Signal Processing and Wireless Communication)**:
+   - **Trend**: This cluster consistently has the highest number of patents. From Q1 2019 to Q4 2023, the number of patents increased from around 1500 to over 3500.
+   - **Analysis**: The steady rise in patents indicates continuous innovation and significant interest in signal processing and wireless communication technologies. This could be driven by the growing demand for advanced communication systems, 5G technology, and the increasing importance of robust signal processing methods in various applications.
+
+2. **Cluster 1 (Image Processing and Recognition)**:
+   - **Trend**: Patents in this cluster also show a steady increase, though at a slightly slower rate compared to Cluster 8. The number of patents has grown consistently over the observed period.
+   - **Analysis**: The upward trend highlights the ongoing advancements and importance of image processing and recognition technologies. These technologies are critical in numerous applications, including medical imaging, autonomous vehicles, and security systems, reflecting their broad applicability and the substantial research and development efforts in this area.
+
+3. **Cluster 4 (User Interaction and Content Management)**:
+   - **Trend**: The number of patents in this cluster has significantly increased, showing a robust upward trajectory from Q1 2019 to Q4 2023.
+   - **Analysis**: The growth in patents related to user interaction and content management suggests that this area is becoming increasingly important as digital and smart technologies evolve. Innovations in user interfaces and content management systems are essential for enhancing user experience and managing the growing volumes of digital content effectively.
 
 ![](NLP/trend1.png)
+
+#### 
+Clusters 8, 1, and 4 were removed from the trend analysis to provide a clearer view of the remaining clusters' trends. These clusters had significantly higher numbers of patents, which could obscure the trends in clusters with fewer patents.
+
+The trends for the remaining clusters indicate that the number of patents in each cluster has generally increased over time. There is a noticeable synchronous pattern in their growth, suggesting that innovations across these different areas of AI have progressed simultaneously.
+
+- **Cluster 9 (Feature Extraction and Machine Learning)**:
+  - **Trend**: This cluster shows the highest number of patents among the remaining clusters. There is a steady increase from around 200 patents in early 2019 to over 500 patents by the end of 2023.
+  - **Analysis**: The growth in Cluster 9 suggests a strong and continuous interest in feature extraction and machine learning technologies. This area is foundational to many AI applications, which likely drives the sustained increase in patent filings.
 
 ![](NLP/trend2.png)
