@@ -12,5 +12,8 @@ scraping/all_patents_link.csv
 data_cleaning/patent_data_example.csv
 data_cleaning/all_patent_info.csv
 
-# Ignore temporary directory for spark session
-network/spark_temp_dir
+# Ignore checkpoint directory for spark session
+network/spark_checkpoints
+
+# Ignore large parquet data
+network/data
