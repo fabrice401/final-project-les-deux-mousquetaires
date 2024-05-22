@@ -100,20 +100,26 @@ We analyzed each cluster by examining the top 50 keywords for each cluster. Thes
 
 | Cluster | Cluster Name                         | Description                                      |
 |---------|--------------------------------------|--------------------------------------------------|
-| 0       | General Machine Learning and Systems | Focuses on general machine learning methods and system configurations. |
-| 1       | Image Processing and Recognition     | Involves techniques for processing and recognizing images. |
-| 2       | Document Management and Text Processing | Pertains to handling and analyzing text and documents. |
-| 3       | Sample Analysis and Training Models  | Covers methods for analyzing samples and training models. |
-| 4       | User Interaction and Content Management | Deals with user interfaces and content management systems. |
-| 5       | Virtual Reality and Augmented Reality | Encompasses technologies related to virtual and augmented reality. |
-| 6       | Resource Management and Communication | Involves management of resources and communication systems. |
-| 7       | Authentication and Security          | Focuses on user authentication and security measures. |
-| 8       | Signal Processing and Wireless Communication | Pertains to processing signals and wireless communication technologies. |
-| 9       | Feature Extraction and Machine Learning | Involves extracting features and applying machine learning techniques. |
-| 10      | Financial Transactions and Payment Systems | Deals with handling financial transactions and payment systems. |
-| 11      | Audio Processing and Speech Recognition | Encompasses audio processing and speech recognition technologies. |
+| 0       | General Machine Learning and Systems | Focuses on general machine learning methods and system configurations, including data processing, system integration, model training, and control mechanisms. |
+| 1       | Image Processing and Recognition     | Involves techniques for processing and recognizing images, including methods for image analysis, object detection, image enhancement, and medical imaging. |
+| 2       | Document Management and Text Processing | Pertains to handling and analyzing text and documents, involving document retrieval, text classification, content extraction, and digital document management systems. |
+| 3       | Sample Analysis and Training Models  | Covers methods for analyzing samples and training models, including data sampling, model training, image analysis, and statistical methods for data evaluation. |
+| 4       | User Interaction and Content Management | Deals with user interfaces and content management systems, focusing on user data interaction, content delivery, media services, and user request handling. |
+| 5       | Virtual Reality and Augmented Reality | Encompasses technologies related to virtual and augmented reality, including virtual environments, physical interaction, display systems, and augmented reality applications. |
+| 6       | Resource Management and Communication | Involves management of resources and communication systems, including resource allocation, network management, wireless communication, and data transmission. |
+| 7       | Authentication and Security          | Focuses on user authentication and security measures, including biometric identification, security protocols, access control, and data protection mechanisms. |
+| 8       | Signal Processing and Wireless Communication | Pertains to processing signals and wireless communication technologies, including signal modulation, wireless networks, data transmission, and communication protocols. |
+| 9       | Feature Extraction and Machine Learning | Involves extracting features and applying machine learning techniques, including feature engineering, neural networks, classification algorithms, and training models. |
+| 10      | Financial Transactions and Payment Systems | Deals with handling financial transactions and payment systems, including transaction processing, payment methods, fraud detection, and blockchain technologies. |
+| 11      | Audio Processing and Speech Recognition | Encompasses audio processing and speech recognition technologies, including signal processing, voice recognition, audio encoding, and speech-to-text systems. |
 
-Sure, here's the revised analysis in English, focusing on the removal of Cluster 0 and the analysis of the top three clusters' trends:
+### **Wordcloud Analysis for Clustering Results**
+
+To provide a clearer visualization of the contents of each cluster, we have generated word clouds for each of the 12 clusters. Each word cloud displays the most frequently occurring words in the abstracts assigned to the respective cluster. This visual representation helps in understanding the dominant themes and topics within each cluster. Below, we provide a general analysis of how these word clouds align with our naming conventions for each cluster, using a couple of clusters as examples to illustrate the consistency.
+
+Across all clusters, the word clouds consistently reflect the main themes identified in the cluster names. For instance, clusters related to document management prominently feature terms like "document" and "text," while those focused on user interaction highlight words such as "user" and "content." This consistency demonstrates that our clustering and naming process effectively captures the key topics and technological areas represented in the patent abstracts.
+
+![](NLP/wordcloud.png)
 
 ## Analysis of AI Patent Trends
 
