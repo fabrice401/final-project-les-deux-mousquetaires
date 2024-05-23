@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+
+  <!-- Required meta tags -->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Clustering & Trends</title>
+  <link href="https://fonts.googleapis.com/css?family=Poppins:300,400&display=swap" rel="stylesheet">
+
+  <!-- Template CSS -->
+  <link rel="stylesheet" href="assets/css/style-starter.css">
+
+</head>
+
+<body>
+<!-- site header -->
+<header id="site-header" class="fixed-top">
+  <nav class="navbar navbar-expand-lg navbar-dark">
+      <a class="navbar-brand" href="overview.html">
+          <span class="fa fa-shield"></span> les deux mousquetaires
+      </a>
+      <button class="navbar-toggler bg-gradient" type="button" data-toggle="collapse"
+          data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
+          aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav m-auto">
+              <li class="nav-item active">
+                  <a class="nav-link" href="overview.html">Overview <span class="sr-only">(current)</span></a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="trends.html">Clustering & Trends</a>
+              </li>
+              <li class="nav-item">
+                  <a class="nav-link" href="network.html">Network Analysis</a>
+              </li>
+          </ul>
+      </div>
+  </nav>
+</header>
+<!-- //site header -->
+
+<!-- about page breadcrumns -->
+<section class="inner-banner">
+
+</section>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb breadcrumb-padding">
+        <li class="breadcrumb-item"><a href="overview.html">Overview</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Clustering & Trends</li>
+    </ol>
+</nav>
+<!-- //about page breadcrumns -->
+
+<!-- about page section1-->
+<section class="w3l-about">
+    <div class="container">
+        <div class="row about-content">
+            <div class="col-lg-6 info mb-lg-0 mb-5 align-center">
+                <h6>NLP & Clustering</h6>
+                <p class="mt-md-4 mt-3"> We used PySpark NLP to extract keywords from the abstracts of AI patents and then analyzed these keywords to determine the number of clusters for the AI patents. Based on the elbow plot, the optimal number of clusters is determined by identifying the point where the decrease in the sum of squared errors (SSE) starts to slow down, forming an "elbow" shape. This point indicates diminishing returns in reducing SSE with the addition of more clusters.</p>
+                
+            </div>
+            <div class="col-lg-6">
+                <img src="assets/images/elbow_plot_keywords.png" class="img-fluid img-shadow" alt="about">
+            </div>
+        </div>
+    </div>
+</section>
+<!-- //about page section1-->
+
+<!-- /mobile section --->
+<section class="w3l-mobile-content-6">
+    <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+            <h4 class="section-title">Clustering Results</h4>
+            <p>We analyzed each cluster by examining the top 50 keywords for each cluster. These keywords were then inputted into ChatGPT to generate a detailed description representing each cluster.<p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Cluster</th>
+                            <th></th>
+                            <th>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Cluster Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General Machine Learning and Systems</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Image Processing and Recognition</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Document Management and Text Processing</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sample Analysis and Training Models</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;User Interaction and Content Management</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Virtual Reality and Augmented Reality</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Resource Management and Communication</td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Authentication and Security</td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Signal Processing and Wireless Communication</td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Feature Extraction and Machine Learning</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Financial Transactions and Payment Systems</td>
+                        </tr>
+                        <tr>
+                            <td>11</td>
+                            <td></td>
+                            <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Audio Processing and Speech Recognition</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                    
+          </div>
+      </div>
+</section>
+<!-- //mobile section --->
+
+<!-- about page team section -->
+<section class="w3l-mobile-content-6">
+    <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+            <h4 class="section-title">Wordcloud Analysis for Clustering Results</h4>
+            <div class="row align-items-center">
+                <img src="assets/images/wordcloud.png" class="img-fluid img-shadow" alt="about">
+            </div>
+
+</section>
+<!-- //about page team section -->
+
+<!-- about page form section -->
+<section class="w3l-mobile-content-6">
+    <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+            <h4 class="section-title">Quantity and Quality of Patents</h4>
+            <div class="row align-items-center">
+                <img src="assets/images/quan_quality.png" class="img-fluid img-shadow" alt="about">
+            </div>
+
+</section>
+<!-- about page form section -->
+
+<!-- about page form section -->
+<section class="w3l-mobile-content-6">
+    <div class="container">
+        <div class="row align-items-center">
+          <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+            <h4 class="section-title">AI Patent Trends</h4>
+            <h4>Removal of Cluster 0</h4>
+<p>Cluster 0, "General Machine Learning and Systems," was removed from the trend analysis because it is too broad and can be further subdivided into more specific categories. This broad categorization does not provide actionable insights into the particular advancements and trends within the various subfields of AI. By excluding Cluster 0, we can focus more accurately on specific technological developments and their trajectories.</p>
+
+<h4>Trend Analysis of the Top Three Clusters</h4>
+<p>The trend analysis focuses on the top three clusters with the highest number of patents over time, which are Cluster 8, Cluster 1, and Cluster 4.</p>
+
+<h5>1. Cluster 8 (Signal Processing and Wireless Communication):</h5>
+<ul>
+    <li><strong>Trend</strong>: This cluster consistently has the highest number of patents. From Q1 2019 to Q4 2023, the number of patents increased from around 1500 to over 3500.</li>
+    <li><strong>Analysis</strong>: The steady rise in patents indicates continuous innovation and significant interest in signal processing and wireless communication technologies. This could be driven by the growing demand for advanced communication systems, 5G technology, and the increasing importance of robust signal processing methods in various applications.</li>
+</ul>
+
+<h5>2. Cluster 1 (Image Processing and Recognition):</h5>
+<ul>
+    <li><strong>Trend</strong>: Patents in this cluster also show a steady increase, though at a slightly slower rate compared to Cluster 8. The number of patents has grown consistently over the observed period.</li>
+    <li><strong>Analysis</strong>: The upward trend highlights the ongoing advancements and importance of image processing and recognition technologies. These technologies are critical in numerous applications, including medical imaging, autonomous vehicles, and security systems, reflecting their broad applicability and the substantial research and development efforts in this area.</li>
+</ul>
+
+<h5>3. Cluster 4 (User Interaction and Content Management):</h5>
+<ul>
+    <li><strong>Trend</strong>: The number of patents in this cluster has significantly increased, showing a robust upward trajectory from Q1 2019 to Q4 2023.</li>
+    <li><strong>Analysis</strong>: The growth in patents related to user interaction and content management suggests that this area is becoming increasingly important as digital and smart technologies evolve. Innovations in user interfaces and content management systems are essential for enhancing user experience and managing the growing volumes of digital content effectively.</li>
+</ul>
+
+            <div class="row align-items-center">
+                <img src="assets/images/trend1.png" class="img-fluid img-shadow" alt="about">
+            </div>
+
+            <h4>Remaining Clusters' Trends</h4>
+<p>Clusters 8, 1, and 4 were removed from the trend analysis to provide a clearer view of the remaining clusters' trends. These clusters had significantly higher numbers of patents, which could obscure the trends in clusters with fewer patents.</p>
+<p>The trends for the remaining clusters indicate that the number of patents in each cluster has generally increased over time. There is a noticeable synchronous pattern in their growth, suggesting that innovations across these different areas of AI have progressed simultaneously.</p>
+
+<ul>
+    <li><strong>Cluster 9 (Feature Extraction and Machine Learning)</strong>:</li>
+    <ul>
+        <li><strong>Trend</strong>: This cluster shows the highest number of patents among the remaining clusters. There is a steady increase from around 200 patents in early 2019 to over 500 patents by the end of 2023.</li>
+        <li><strong>Analysis</strong>: The growth in Cluster 9 suggests a strong and continuous interest in feature extraction and machine learning technologies. This area is foundational to many AI applications, which likely drives the sustained increase in patent filings.</li>
+    </ul>
+</ul>
+
+            <div class="row align-items-center">
+                <img src="assets/images/trend2.png" class="img-fluid img-shadow" alt="about">
+            </div>
+
+</section>
+<!-- about page form section -->
+
+<!-- site footer -->
+<footer id="site-footer">
+    <div class="top-footer">
+      <div class="container my-md-5 my-4">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="footer-logo mb-3">
+              <a href="overview.html">
+                <span class="fa fa-shield"></span> les deux mousquetaires
+  
+              </a>
+            </div>
+            <div>
+              <p class="">We would like to thank Professor Jon Clindaniel for his excellent teaching and valuable advice throughout this course. We also extend our thanks to the course TAs, Adam and Wonje, for their timely assistance in addressing our questions.</p>
+            </div>
+          </div>
+          <!-- Quick Links -->
+          <div class="col-lg-3 col-md-4 mt-lg-0 mt-5">
+            <h4 class="footer-title">Quick Links</h4>
+            <ul class="footer-list">
+              <li><a href="https://github.com/macs30123-s24/final-project-les-deux-mousquetaires/"> GitHub Repo</a></li>
+              <li><a href="https://drive.google.com/drive/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?usp=drive_link"> Data Google Drive</a></li>
+              <li><a href="trends.html"> Clustering & Trends</a></li>
+              <li><a href="netwokr.html"> Network</a></li>
+            </ul>
+          </div>
+          <!-- Newsletter -->
+          <div class="col-lg-5 col-md-8 mt-lg-0 mt-5">
+            <h4 class="footer-title">Members & Responsibilities</h4>
+            <p class="mb-4">Guankun Li: Scraping, Clustering, and Network Analysis</p>
+            </p>
+            <p class="mb-4">Tianyue Cong: Scraping, Clustering, and Network Analysis</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bottom-footer">
+      <div class="container">
+        <div class="row">
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- //site footer -->
+
+<!-- move top -->
+<button onclick="topFunction()" id="movetop" class="bg-primary" title="Go to top">
+  <span class="fa fa-angle-up"></span>
+</button>
+
+<script>
+  // When the user scrolls down 20px from the top of the document, show the button
+  window.onscroll = function () {
+    scrollFunction()
+  };
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      document.getElementById("movetop").style.display = "block";
+    } else {
+      document.getElementById("movetop").style.display = "none";
+    }
+  }
+  // When the user clicks on the button, scroll to the top of the document
+  function topFunction() {
+    document.body.scrollTop = 0;
+    document.documentElement.scrollTop = 0;
+  }
+</script>
+<!-- //move top -->
+
+<!-- javascript -->
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+
+<!-- libhtbox -->
+<script src="assets/js/lightbox-plus-jquery.min.js"></script>
+
+<!-- particles -->
+<script src='assets/js/particles.min.js'></script>
+<script src="assets/js/script.js"></script>
+<!-- //particles -->
+
+<!-- owl carousel -->
+<script src="assets/js/owl.carousel.js"></script>
+<script>
+  $(document).ready(function () {
+    var owl = $('.owl-carousel');
+    owl.owlCarousel({
+      margin: 10,
+      nav: true,
+      loop: false,
+      responsive: {
+        0: {
+          items: 1
+        },
+        767: {
+          items: 2
+        },
+        1000: {
+          items: 3
+        }
+      }
+    })
+  })
+</script>
+
+<!-- disable body scroll which navbar is in active -->
+<script>
+  $(function () {
+    $('.navbar-toggler').click(function () {
+      $('body').toggleClass('noscroll');
+    })
+  });
+</script>
+<!-- disable body scroll which navbar is in active -->
+
+<!-- bootstrap -->
+<script src="assets/js/bootstrap.min.js"></script>
+
+</body>
+</html>
