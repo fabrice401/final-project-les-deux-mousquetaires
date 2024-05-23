@@ -15,5 +15,12 @@ data_cleaning/all_patent_info.csv
 # Ignore checkpoint directory for spark session
 network/spark_checkpoints
 
+# Ignore local directory of spark
+network/spark_temp_dir
+
 # Ignore large parquet data
 network/data
+
+# Ignore BERT pre-trained models
+network/__MACOSX
+network/bert-base-uncased
