@@ -1,11 +1,9 @@
 # Large-Scale Analysis of Patents in Artificial Intelligence: Trends and Network Insights
 This is the final project for MACS 30123 course Large-Scale Computing for the Social Sciences owned by Guankun Li and Tianyue Cong. In this project, we utilized high performance computing techniques to scrape information about patents in the field of artifical intelligence (between 2019 and 2023) and conduct large-scale analysis, including clustering and network analysis, to explore the research (patent) trend in the field of artifical intelligence and the citation patterns during this period.
 
-To do:
-
-Canvas Repo Requirements: 
-1. describing a social science research problem, justification of the importance of using scalable computing methods to solve it, as well as a description of the large-scale computing methods you employ in the project (1000 words minimum);
-2. state the responsibilities of each group member in your README.
+## Responsibilities
+- Guankun Li: Web scraping, Clustering & Trends
+- Tianyue Cong: Web scraping, Network Analysis
 
 ## Research Question
 
@@ -27,7 +25,7 @@ AI is rapidly transforming various industries, driving advancements in fields su
 
 Identifying distinct subfields within AI patents allows for a more granular understanding of innovation. This classification can reveal the specific characteristics and focus areas within the broader AI domain, helping policymakers and researchers prioritize funding and support (Griliches, 1990). Such insights are crucial for tailoring education and training programs to meet the demands of emerging technological fields (National Academy of Sciences, 2017).
 
-#### Importance of Patent Network Analysis
+### Importance of Patent Network Analysis
 
 Analyzing the citation network of AI patents provides insights into the structure and dynamics of knowledge dissemination. Citation networks illustrate how innovations build upon each other, highlighting influential patents and seminal technologies. This analysis is critical for several reasons:
 
@@ -36,6 +34,20 @@ Citation networks reveal how knowledge flows between different entities and tech
 
 2.**Interdisciplinary Connections**:
 AI is inherently interdisciplinary, often combining insights from computer science, engineering, and domain-specific knowledge. By examining citation patterns, we can uncover how different fields contribute to AI advancements and foster interdisciplinary collaboration (Narin, Hamilton, & Olivastro, 1997). This understanding can enhance the design of interdisciplinary research initiatives and funding programs (Porter & Rafols, 2009).
+
+## Computational Challenges and Scalability
+
+We encountered computational challenges, and to address these, we had to use scalable computing methods.
+
+1. **Scraping and Data Storage**:
+   - Our project involved scraping a large volume of raw text data, exceeding 200GB. To manage and store this data efficiently, we utilized AWS S3, which offers virtually unlimited storage capacity and automatic scalability. For processing this extensive dataset, we employed midway's mpi4py to enable parallel processing, ensuring that our data handling was both efficient and scalable. This approach allowed us to distribute the workload across multiple processors, significantly speeding up the data processing tasks.
+
+2. **NLP and Clustering**:
+   - Processing and analyzing the vast amount of textual data for NLP and clustering presented significant computational challenges. To handle this, we used PySpark, a powerful distributed computing framework. PySpark's ability to process large datasets in parallel across a cluster of machines made it ideal for our needs. This distributed approach ensured efficient utilization of computational resources and allowed us to scale our NLP and clustering computations as the dataset grew. PySpark also provided robust libraries for text processing and machine learning, facilitating complex analysis at scale.
+
+3. **Network Analysis**:
+   - Constructing and analyzing a network with over 500,000 nodes and edges required substantial computational power. We addressed this challenge by leveraging both PySpark and Dask. PySpark was used for the initial data processing and feature extraction, while Dask provided the necessary scalability for the detailed network analysis and visualization tasks. By combining these tools, we were able to compute network characteristics and generate visualizations efficiently, even with the large scale of our data. This hybrid approach ensured that our network analysis was both comprehensive and scalable.
+
 
 ## Scraping
 We chose to scrape the patents related to artifical intelligence from 2019 to 2023 using [Google Patents](https://patents.google.com/). We used midway3 to download a total of 382071 individual patents related to artifical intelligence (see [`download_patent_midway.py`](scraping/download_patent_midway.py) file). 
