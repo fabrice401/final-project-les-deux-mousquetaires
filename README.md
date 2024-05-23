@@ -1,4 +1,4 @@
-# final-project-les-deux-mousquetaires
+# Large-Scale Analysis of Patents in Artificial Intelligence: Trends and Network Insights
 This is the final project for MACS 30123 course Large-Scale Computing for the Social Sciences owned by Guankun Li and Tianyue Cong. In this project, we utilized high performance computing techniques to scrape information about patents in the field of artifical intelligence (between 2019 and 2023) and conduct large-scale analysis, including clustering and network analysis, to explore the research (patent) trend in the field of artifical intelligence and the citation patterns during this period.
 
 To do:
@@ -6,6 +6,36 @@ To do:
 Canvas Repo Requirements: 
 1. describing a social science research problem, justification of the importance of using scalable computing methods to solve it, as well as a description of the large-scale computing methods you employ in the project (1000 words minimum);
 2. state the responsibilities of each group member in your README.
+
+## Research Question
+
+1. **Are there distinct subfields within the domain of AI patents? If so, what are the characteristics of these subfields?**
+
+2. **Which subfields of AI are more popular, and what trends do they exhibit? How might these subfields develop in the future?**
+
+3. **What are the characteristics of the patent network formed through citations in the AI field? Do patents in different subfields exhibit distinct network properties?**
+
+4. **TBD**
+
+## Social Science Significance
+
+This study holds significant social science importance in multiple ways, including the analysis of technological trends, the structure of innovation networks, and the impact on various socio-economic factors.
+
+### Importance of Analyzing AI Patents
+
+AI is rapidly transforming various industries, driving advancements in fields such as healthcare, finance, and neuroscience. Patents are a vital indicator of technological innovation, representing the forefront of research and development. By analyzing AI patents, we can gain insights into **Technological Trends and Innovation Dynamics**. For example, by examining the growth in patents related to AI subfields like image processing or natural language processing, we can identify which areas are experiencing rapid development and which are plateauing (Henderson, Jaffe, & Trajtenberg, 1998). This understanding can inform strategic investment decisions and policy formulations aimed at fostering innovation (OECD, 2015).
+
+Identifying distinct subfields within AI patents allows for a more granular understanding of innovation. This classification can reveal the specific characteristics and focus areas within the broader AI domain, helping policymakers and researchers prioritize funding and support (Griliches, 1990). Such insights are crucial for tailoring education and training programs to meet the demands of emerging technological fields (National Academy of Sciences, 2017).
+
+#### Importance of Patent Network Analysis
+
+Analyzing the citation network of AI patents provides insights into the structure and dynamics of knowledge dissemination. Citation networks illustrate how innovations build upon each other, highlighting influential patents and seminal technologies. This analysis is critical for several reasons:
+
+1.**Knowledge Flow and Innovation Clusters**:
+Citation networks reveal how knowledge flows between different entities and technological domains. Understanding these networks can identify innovation clusters and influential patents, guiding strategic decisions in research and development (Singh, 2005). This can also highlight potential collaborations and partnerships that can accelerate technological advancements (Breschi & Lissoni, 2001).
+
+2.**Interdisciplinary Connections**:
+AI is inherently interdisciplinary, often combining insights from computer science, engineering, and domain-specific knowledge. By examining citation patterns, we can uncover how different fields contribute to AI advancements and foster interdisciplinary collaboration (Narin, Hamilton, & Olivastro, 1997). This understanding can enhance the design of interdisciplinary research initiatives and funding programs (Porter & Rafols, 2009).
 
 ## Scraping
 We chose to scrape the patents related to artifical intelligence from 2019 to 2023 using [Google Patents](https://patents.google.com/). We used midway3 to download a total of 382071 individual patents related to artifical intelligence (see [`download_patent_midway.py`](scraping/download_patent_midway.py) file). 
@@ -165,3 +195,21 @@ The trends for the remaining clusters indicate that the number of patents in eac
   - **Analysis**: The growth in Cluster 9 suggests a strong and continuous interest in feature extraction and machine learning technologies. This area is foundational to many AI applications, which likely drives the sustained increase in patent filings.
 
 ![](NLP_clustering/trend2.png)
+
+## Network
+
+## Scalability
+
+## References
+- Breschi, S., & Lissoni, F. (2001). Knowledge Spillovers and Local Innovation Systems: A Critical Survey. *Industrial and Corporate Change*, 10(4), 975-1005.
+- Griliches, Z. (1990). Patent statistics as economic indicators: A survey. *Journal of Economic Literature*, 28(4), 1661-1707.
+- Henderson, R., Jaffe, A., & Trajtenberg, M. (1998). Universities as a source of commercial technology: A detailed analysis of university patenting, 1965-1988. *Review of Economics and Statistics*, 80(1), 119-127.
+- National Academy of Sciences. (2017). *Building America’s Skilled Technical Workforce*. Washington, DC: The National Academies Press.
+- Narin, F., Hamilton, K. S., & Olivastro, D. (1997). The increasing linkage between U.S. technology and public science. *Research Policy*, 26(3), 317-330.
+- OECD. (2015). *OECD Science, Technology and Industry Scoreboard 2015: Innovation for growth and society*. OECD Publishing.
+- Porter, A. L., & Rafols, I. (2009). Is science becoming more interdisciplinary? Measuring and mapping six research fields over time. *Scientometrics*, 81(3), 719-745.
+- Singh, J. (2005). Collaborative networks as determinants of knowledge diffusion patterns. *Management Science*, 51(5), 756-770.
+
+## Acknowledgement
+
+We would like to express our sincere gratitude to Professor Jon Clindaniel for his excellent teaching and valuable advice throughout this course. We also extend our thanks to the course TAs, Adam and Wonje, for their timely assistance and support in addressing our questions.
