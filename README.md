@@ -255,28 +255,28 @@ pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_
 ```
 
 #### Calculate Centrality Measures (Grouped by Keyword Clusters)
-We used Dask to perform the *group-by* and *aggregate* operations to derive the centrality measures for each patent keyword cluster (see the [notebook](NLP_clustering/network_features_by_cluster.ipynb) for more details).
+We used Dask to perform the *group-by* and *aggregate* operations to derive the centrality measures for each patent keyword cluster (see the [notebook](network/network_features_by_cluster.ipynb) for more details).
 1. **Degree Centrality**
 
-![](NLP_clustering/centrality_cluster.png)
+![](network/centrality_cluster.png)
    - Clusters show varying levels of average degree centrality, with Clusters 7 (Authentication and Security) and 9 (Feature Extraction and Machine Learning) having the highest scores.
    - This indicates that patents in these clusters have a higher number of direct connections to other patents, signifying their importance and connectivity within the network.
 
 2. **PageRank Centrality**
 
-![](NLP_clustering/pagerank_cluster.png)
+![](network/pagerank_cluster.png)
    - The average PageRank scores for each cluster are relatively similar, indicating that patents across different clusters have a comparable level of influence in the citation network.
    - Clusters related to General Machine Learning and Systems, Image Processing and Recognition, and Document Management and Text Processing exhibit slightly higher average PageRank scores.
 
 3. **Betweenness Centrality**
 
-![](NLP_clustering/betweenness_cluster.png)
+![](network/betweenness_cluster.png)
    - The average betweenness centrality scores show significant variation, with Cluster 7 (Authentication and Security) having a notably higher score than other clusters.
    - This suggests that patents in the Authentication and Security cluster often serve as bridges connecting different parts of the network, highlighting their strategic importance in the flow of information.
 
 4. **Closeness Centrality**
 
-![](NLP_clustering/closeness_cluster.png)
+![](network/closeness_cluster.png)
    - There is noticeable variation in the average closeness centrality among clusters.
    - Cluster 7 (Authentication and Security) shows the highest average closeness centrality, suggesting that patents in this cluster are more central and closer to all other nodes in the network.
    - Clusters related to Sample Analysis and Training Models (Cluster 3) and Document Management and Text Processing (Cluster 2) have lower average closeness centrality scores, indicating they are more peripheral in the network.
