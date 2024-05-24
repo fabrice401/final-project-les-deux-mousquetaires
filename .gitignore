@@ -24,3 +24,6 @@ network/data
 # Ignore BERT pre-trained models
 network/__MACOSX
 network/bert-base-uncased
+
+# Ignore DS_Store
+.DS_Store
