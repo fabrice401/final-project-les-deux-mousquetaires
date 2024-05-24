@@ -13,7 +13,7 @@ This is the final project for MACS 30123 course Large-Scale Computing for the So
 
 3. **What are the characteristics of the patent network formed through citations in the AI field? Do patents in different subfields exhibit distinct network properties?**
 
-4. **TBD**
+4. **What is the Knowledge Exploration Distance of AI patents? Are they highly diverse or similar?**
 
 ## Social Science Significance
 
