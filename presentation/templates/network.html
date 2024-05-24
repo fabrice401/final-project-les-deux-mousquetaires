@@ -63,7 +63,7 @@
       <div class="container">
           <div class="row align-items-center">
               <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-                  <h4 class="section-title"><b>Patent-Level Citation Network - Data Preparation</b></h4>
+                  <h4 class="section-title"><b>Patent Network - Data Preparation</b></h4>
                   <p class="text-center">We used Spark to prepare parquet files (network data of patent citations).</p>
               </div>
           </div>
@@ -104,7 +104,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-                    <h4 class="section-title"><b>Patent-Level Citation Network - Calculate Centrality Measures</b></h4>
+                    <h4 class="section-title"><b>Patent Network - Centrality Measures</b></h4>
                     <p class="text-center">We used Dask to perform the group-by and aggregate operations to derive the centrality measures 
                       for each patent keyword cluster.</p>
                 </div>
@@ -169,7 +169,7 @@
                   <p class="text-para">
                     <ul>
                       <li>There is noticeable variation in the average closeness centrality among clusters.</li>
-                      <li>Cluster 7 (<span style="color: #ff9900;"></span>Authentication and Security) shows the highest average closeness centrality, suggesting that patents in this cluster are more central and closer to all other nodes in the network.</li>
+                      <li>Cluster 7 (<span style="color: #ff9900;">Authentication and Security</span>) shows the highest average closeness centrality, suggesting that patents in this cluster are more central and closer to all other nodes in the network.</li>
                       <li>Clusters related to <span style="color: #ff9900;">Sample Analysis and Training Models</span> (Cluster 3) and <span style="color: #ff9900;">Document Management and Text Processing</span> (Cluster 2) have lower average closeness centrality scores, indicating they are more peripheral in the network.</li>
                     </ul> 
                   </p>
@@ -185,48 +185,45 @@
 <section class="w3l-features">
   <div class="call-w3">
       <div class="container">
-          <!-- Patent Characteristics Section -->
           <div class="row align-items-center">
               <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-                  <h4 class="section-title"><b>Patent-Level Citation Network - Calculate Knowledge Exploration Distance</b></h4>
-                  <p class="text-center">This section discusses various characteristics of patents within the AI field, highlighting different metrics such as the number of citations, innovation impact, and technological advancements across different clusters.</p>
+                  <h4 class="section-title"><b>Patent Network - Knowledge Exploration Distance</b></h4>
               </div>
           </div>
-          <!-- Add content for the new section here -->
+
+          <!-- Deacribe the results -->
           <div class="row main-cont-wthree-2 mt-5">
               <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
-                  <h4 class="title-left"><b>Citation Analysis</b></h4>
+                  <h4 class="title-left"><b>Knowledge Exploration Distance (KED)</b></h4>
                   <p class="text-para">
                     <ul>
-                      <li>Analysis of citation patterns reveals significant insights into the influence and reach of patents in different clusters.</li>
-                      <li>Clusters focusing on <span style="color: #ff9900;">General Machine Learning and Systems</span> and <span style="color: #ff9900;">Feature Extraction and Machine Learning</span> exhibit higher citation counts, indicating their pivotal role in AI research.</li>
+                      <li>A higher KED suggests that a patent explores more diverse and distant technological knowledge.</li>
+                      <li>To calculate KED, we integrate node2vec-embedded embeddings and BERT-embedded vectors:
+                        <ul>
+                          <li>First concatenated the two embedded vectors to capture both strutural and semantic representation.</li>
+                          <li>Then computed <span style="color: #ff9900;">cosine similarity</span> between concatenated vector of a citing patent and each of its cited patents.</li>
+                          <li>Finally calculated KED for each citing patent by averaging the dissimilarity between its concatenated vector and those of its cited patents.</li>
+                        </ul>
+                      </li>
+                      <li><span style="color: #ff9900;">A KED of 0.21 for artificial intelligence patents</span>:
+                        <ul>
+                          <li>AI patents, on average, are moderately distant from their cited patents in the technology space.</li>
+                          <li>A balanced level of novelty and exploration: while there is some degree of innovation,
+                            a significant portion of AI patents builds incrementally on existing technologies rather than exploring entirely new technological areas.
+                          </li>
+                        </ul>
+                      </li>
                     </ul>  
                   </p>
               </div>
               <div class="col-lg-6 feature-grid-right order1">
-                  <img src="assets/images/citation_analysis.png" class="img-fluid img-shadow" alt="Citation Analysis">
+                  <img src="assets/images/ked_formula.png" class="img-fluid img-shadow" alt="Citation Analysis">
               </div>
           </div>
       </div>
   </div>
 </section>
 <!-- services page block 3 (Patent-Level Citation Network - Calculate Knowledge Exploration Distance) -->
-
-<!-- /mobile section --->
-<section class="w3l-mobile-content-6">
-  <div class="container">
-      <div class="row align-items-center">
-        <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-          <h4 class="section-title">Title</h4>
-          <p>content<p>
-            <div class="row align-items-center">
-              <img src="assets/images/wordcloud.png" class="img-fluid img-shadow" alt="about">
-          </div>
-                  
-        </div>
-    </div>
-</section>
-<!-- //mobile section --->
 
 <!-- site footer -->
 <footer id="site-footer">

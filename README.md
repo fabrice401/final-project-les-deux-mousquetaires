@@ -217,7 +217,7 @@ For the patent citation network analysis, we focused on two levels of analysis: 
 
 When it comes to the **patent-level network**, we are interested in calculating the **Knowledge Exploration Distance** (KED; Choi and Yoon, 2022) for patents by integrating node embeddings (embedded via *node2vec*) and BERT embedded vectors. KED measures the distance between a patent and its cited patents in the technology space. A larger KED indicates that the patent has explored more diverse and distant technological knowledge, suggesting higher novelty and innovation. This metric helps in understanding how much an invention has deviated from its predecessors, indicating the degree of exploration and innovation in its development.
 
-Following Choi and Yoon's (2012) approach, we calculate KED by first concatenating abstract vectors and network embeddings to form a comprehensive representation for each patent. We then computed the cosine similarity between the combined vector of the citing patent and each of its cited patents. For each citing patent, we calculated the KED by averaging the dissimilarity between its combined vector and the combined vectors of its cited patents. The dissimilarity is calculated as one minus the cosine similarity (see the formula above). Next, we aggregated the calculated KED values for all citing patents to analyze the overall knowledge exploration trends, before grouping them by the keyword cluster we derived earlier. A higher KED indicates that the citing patent is semantically and technologically distant from its cited patents, suggesting high novelty and exploration. In contrast, a lower KED Indicates that the citing patent is semantically and technologically close to its cited patents, suggesting incremental innovation.
+Following Choi and Yoon's (2012) approach, we calculate KED by first concatenating abstract vectors and network embeddings to form a comprehensive representation for each patent. We then computed the cosine similarity between the combined vector of the citing patent and each of its cited patents. For each citing patent, we calculated the KED by averaging the dissimilarity between its combined vector and the combined vectors of its cited patents. The dissimilarity is calculated as one minus the cosine similarity (see the formula above). Next, we aggregated the calculated KED values for all citing patents to analyze the overall knowledge exploration trends. A higher KED indicates that the citing patent is semantically and technologically distant from its cited patents, suggesting high novelty and exploration. In contrast, a lower KED Indicates that the citing patent is semantically and technologically close to its cited patents, suggesting incremental innovation.
 
 ![](/screenshots/ked_formula.png)
 
@@ -226,8 +226,6 @@ In this project, calculating KED is crucial for several reasons:
 - **Research and Development Insights**: By understanding the KED, companies and researchers can evaluate the effectiveness of their R&D efforts in producing novel technologies.
 - **Strategic Decision Making**: Organizations can use KED to make informed decisions about patent portfolios, investment in R&D, and strategic partnerships.
 - **Patent Value Estimation**: KED can be correlated with other patent indicators to estimate the potential value and impact of patents, guiding patent filing and maintenance decisions.
-
-By grouping KED by patent abstract keyword clusters, the project aims to understand the distribution of innovation across different technological areas, providing valuable insights into the dynamics of technological advancements in various fields.
 
 ### Install and Setup Packages for Midway Operation
 A number of packages are needed to be installed for conducting network analysis on Midway, including *Graphframe*, *node2vec*, and *transformer*. For detailed steps of installation and setup, please refer to this [instruction markdown file](network/Install_&_Setup_Packages.md).
@@ -304,8 +302,8 @@ Then, type the following command in the terminal:
 pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_network_train_node2vec.py
 ```
 
-#### Calculate KED (Grouped by Keyword Clusters)
-
+#### Calculate Overall KED
+A KED of 0.21 for artificial intelligence patents indicates that these patents, on average, are moderately distant from their cited patents in the technology space. This suggests a **balanced level of novelty and exploration**, implying that while there is some degree of innovation, a significant portion of AI patents builds incrementally on existing technologies rather than exploring entirely new technological areas.
 
 
 ## References
