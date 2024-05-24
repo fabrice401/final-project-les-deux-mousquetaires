@@ -63,7 +63,7 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-                    <h4 class="section-title">Network Features</h4>
+                    <h4 class="section-title"><b>Network Features</b></h4>
                     <p class="text-center">For the patent citation network analysis, we focused on two levels of analysis: one for assignee-level 
                       and the other for patent-level. Here, we utilized a myriad of centrality measures to 
                        offer a comprehensive picture of the different aspects of the network, 
@@ -72,9 +72,14 @@
             </div>
             <div class="row main-cont-wthree-2 mt-5">
                 <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
-                    <h4 class="title-left">Degree centrality</h4>
-                    <p class="text-para">Reflects the number of direct connections an assignee has within 
-                      the network and hence gives us an idea of the immediate citation relationships. </p>
+                    <h4 class="title-left"><b>Degree centrality</b></h4>
+                    <p class="text-para"> 
+                      <ul>
+                        <li>Clusters 7 (<span style="color: #ff9900;">Authentication and Security</span>) and 9 (<span style="color: #ff9900;">Feature Extraction and Machine Learning</span>) have the highest degree centrality. </li>
+                        <li>This indicates that patents in these clusters have more direct connections to other patents, 
+                          signifying their importance and connectivity within the network. </li>
+                      </ul>  
+                    </p>
                 </div>
                 <div class="col-lg-6 feature-grid-right order1">
                     <img src="assets/images/centrality_cluster.png" class="img-fluid img-shadow" alt="services">
@@ -85,17 +90,24 @@
                     <img src="assets/images/pagerank_cluster.png" class="img-fluid img-shadow" alt="services">
                 </div>
                 <div class="col-lg-6 feature-grid-left mt-lg-0 mt-sm-5 mt-4">
-                    <h4 class="title-left">PageRank centrality</h4>
-                    <p class="text-para">assesses the influence of an assignee in the network based on the 
-                      number and quality of citations they receive and highlights the overall influence of 
-                      assignees. </p>
+                    <h4 class="title-left"><b>PageRank centrality</b></h4>
+                    <p class="text-para">
+                      <ul>
+                        <li>The average PageRank scores for each cluster are relatively similar, indicating that patents across different clusters have a comparable level of influence in the citation network.</li>
+                        <li>Clusters related to <span style="color: #ff9900;">General Machine Learning and Systems</span>, <span style="color: #ff9900;">Image Processing and Recognition</span>, and <span style="color: #ff9900;">Document Management and Text Processing</span> exhibit slightly higher average PageRank scores.</li>
+                      </ul>  
+                    </p>
                 </div>
             </div>
             <div class="row main-cont-wthree-2 mt-5">
               <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
-                  <h4 class="title-left">betweenness centrality</h4>
-                  <p class="text-para">indicates the extent to which an assignee lies on the shortest paths 
-                    between other assignees, highlighting their role as intermediaries or brokers within the network. </p>
+                  <h4 class="title-left"><b>Betweenness Centrality</b></h4>
+                  <p class="text-para">
+                    <ul>
+                      <li>The average betweenness centrality scores show significant variation, with Cluster 7 (<span style="color: #ff9900;">Authentication and Security</span>) having a notably higher score than other clusters.</li>
+                      <li>This suggests that patents in the Authentication and Security cluster often serve as bridges connecting different parts of the network, highlighting their strategic importance in the flow of information.</li>
+                    </ul> 
+                  </p>
               </div>
               <div class="col-lg-6 feature-grid-right order1">
                   <img src="assets/images/betweenness_cluster.png" class="img-fluid img-shadow" alt="services">
@@ -106,10 +118,14 @@
                   <img src="assets/images/closeness_cluster.png" class="img-fluid img-shadow" alt="services">
               </div>
               <div class="col-lg-6 feature-grid-left mt-lg-0 mt-sm-5 mt-4">
-                  <h4 class="title-left">closeness centrality</h4>
-                  <p class="text-para">represents how close an assignee is to all other assignees in the 
-                    network. It is the inverse of the average shortest path distance from an assignee to all other assignees, 
-                    indicating how quickly information can spread from them to others. </p>
+                  <h4 class="title-left"><b>Closeness Centrality</b></h4>
+                  <p class="text-para">
+                    <ul>
+                      <li>There is noticeable variation in the average closeness centrality among clusters.</li>
+                      <li>Cluster 7 (<span style="color: #ff9900;"></span>Authentication and Security) shows the highest average closeness centrality, suggesting that patents in this cluster are more central and closer to all other nodes in the network.</li>
+                      <li>Clusters related to <span style="color: #ff9900;">Sample Analysis and Training Models</span> (Cluster 3) and <span style="color: #ff9900;">Document Management and Text Processing</span> (Cluster 2) have lower average closeness centrality scores, indicating they are more peripheral in the network.</li>
+                    </ul> 
+                  </p>
               </div>
           </div>
         </div>
