@@ -63,36 +63,55 @@
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-                    <h4 class="section-title">What we provide</h4>
-                    <p class="text-center">There are many variations of passages of Lorem Ipsum available, but the majority
-                        have
-                        suffered alteration in some form, by injected humour</p>
+                    <h4 class="section-title">Network Features</h4>
+                    <p class="text-center">For the patent citation network analysis, we focused on two levels of analysis: one for assignee-level 
+                      and the other for patent-level. Here, we utilized a myriad of centrality measures to 
+                       offer a comprehensive picture of the different aspects of the network, 
+                       including degree centrality, PageRank centrality, betweenness centrality, and closeness centrality.</p>
                 </div>
             </div>
             <div class="row main-cont-wthree-2 mt-5">
                 <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
-                    <h4 class="title-left">A Productivity Platform</h4>
-                    <p class="text-para">Curabitur id gravida risus. Fusce eget ex fermentum, ultricies nisi ac sed, lacinia est.
-                        Quisque ut lectus consequat, venenatis eros et, commodo risus. Nullam sit amet laoreet elit.
-                        Suspendisse non magna a velit imperdiet efficitur. </p>
-                    <a href="#readmore" class="btn btn-primary btn-style mt-4">Read More</a>
+                    <h4 class="title-left">Degree centrality</h4>
+                    <p class="text-para">Reflects the number of direct connections an assignee has within 
+                      the network and hence gives us an idea of the immediate citation relationships. </p>
                 </div>
                 <div class="col-lg-6 feature-grid-right order1">
-                    <img src="assets/images/s1.png" class="img-fluid img-shadow" alt="services">
+                    <img src="assets/images/centrality_cluster.png" class="img-fluid img-shadow" alt="services">
                 </div>
             </div>
             <div class="row main-cont-wthree-2 mt-5">
                 <div class="col-lg-6 feature-grid-right">
-                    <img src="assets/images/s2.png" class="img-fluid img-shadow" alt="services">
+                    <img src="assets/images/pagerank_cluster.png" class="img-fluid img-shadow" alt="services">
                 </div>
                 <div class="col-lg-6 feature-grid-left mt-lg-0 mt-sm-5 mt-4">
-                    <h4 class="title-left">Performance Analyze</h4>
-                    <p class="text-para">Curabitur id gravida risus. Fusce eget ex fermentum, ultricies nisi ac sed, lacinia est.
-                        Quisque ut lectus consequat, venenatis eros et, commodo risus. Nullam sit amet laoreet elit.
-                        Suspendisse non magna a velit imperdiet efficitur. </p>
-                    <a href="#readmore" class="btn btn-primary btn-style mt-4">Read More</a>
+                    <h4 class="title-left">PageRank centrality</h4>
+                    <p class="text-para">assesses the influence of an assignee in the network based on the 
+                      number and quality of citations they receive and highlights the overall influence of 
+                      assignees. </p>
                 </div>
             </div>
+            <div class="row main-cont-wthree-2 mt-5">
+              <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
+                  <h4 class="title-left">betweenness centrality</h4>
+                  <p class="text-para">indicates the extent to which an assignee lies on the shortest paths 
+                    between other assignees, highlighting their role as intermediaries or brokers within the network. </p>
+              </div>
+              <div class="col-lg-6 feature-grid-right order1">
+                  <img src="assets/images/betweenness_cluster.png" class="img-fluid img-shadow" alt="services">
+              </div>
+          </div>
+          <div class="row main-cont-wthree-2 mt-5">
+              <div class="col-lg-6 feature-grid-right">
+                  <img src="assets/images/closeness_cluster.png" class="img-fluid img-shadow" alt="services">
+              </div>
+              <div class="col-lg-6 feature-grid-left mt-lg-0 mt-sm-5 mt-4">
+                  <h4 class="title-left">closeness centrality</h4>
+                  <p class="text-para">represents how close an assignee is to all other assignees in the 
+                    network. It is the inverse of the average shortest path distance from an assignee to all other assignees, 
+                    indicating how quickly information can spread from them to others. </p>
+              </div>
+          </div>
         </div>
     </div>
 </section>
@@ -215,7 +234,7 @@
         <div class="col-lg-4">
           <div class="footer-logo mb-3">
             <a href="overview.html">
-              <span class="fa fa-shield"></span> les deux mousquetaires
+              <span class="fa fa-shield"></span> Acknowledgements
 
             </a>
           </div>
