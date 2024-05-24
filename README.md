@@ -212,6 +212,14 @@ The trends for the remaining clusters indicate that the number of patents in eac
 
 ## Network
 
+![](NLP_clustering/centrality_cluster.png)
+
+![](NLP_clustering/pagerank_cluster.png)
+
+![](NLP_clustering/betweenness_cluster.png)
+
+![](NLP_clustering/closeness_cluster.png)
+
 ## References
 - Breschi, S., & Lissoni, F. (2001). Knowledge Spillovers and Local Innovation Systems: A Critical Survey. *Industrial and Corporate Change*, 10(4), 975-1005.
 - Griliches, Z. (1990). Patent statistics as economic indicators: A survey. *Journal of Economic Literature*, 28(4), 1661-1707.
