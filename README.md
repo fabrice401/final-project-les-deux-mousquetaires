@@ -1,6 +1,23 @@
 # Large-Scale Analysis of Patents in Artificial Intelligence: Trends and Network Insights
 This is the final project for MACS 30123 course Large-Scale Computing for the Social Sciences owned by Guankun Li and Tianyue Cong. In this project, we utilized high performance computing techniques to scrape information about patents in the field of artifical intelligence (between 2019 and 2023) and conduct large-scale analysis, including clustering and network analysis, to explore the research (patent) trend in the field of artifical intelligence and the citation patterns during this period.
 
+## README Navigation
+| Main Section          | Description                                   |
+|------------------|-----------------------------------------------|
+| [Responsibilities](#responsibilities) | Team members and division of labor |
+| [Research Questions](#research-questions) | Research questions guiding this project |
+| [Social Science Significance](#social-science-significance) | Social science significance of this study |
+| [Computational Challenges and Scalability](#computational-challenges-and-scalability) | Identify computational challenges for this project |
+| [Scraping](#scraping) | Scrape AI patent data from Google Patents |
+| [Data Cleaning](#data-cleaning) | Clean scraped data to prepare for later analysis |
+| [Clustering](#clustering) | Cluster keywords of patent abstract |
+| [Analysis of AI Patent Trends](#analysis-of-ai-patent-trends) | Analysis of trends for different AI subfields |
+| [Network Analysis](#network-analysis) | Network analysis of patent citation |
+| [Presentation](#presentation) | Presentation web page |
+| [Google Drive](#google-drive) | Link to Google Drive storing intermediary, large files  |
+| [References](#references) | References section for this project |
+| [Acknowledgement](#acknowledgement) | Acknowledgement from team les deux mousquetaires  |
+
 ## Responsibilities
 - Guankun Li: Web scraping, Clustering & Trends
 - Tianyue Cong: Web scraping, Network Analysis
@@ -208,7 +225,7 @@ The trends for the remaining clusters indicate that the number of patents in eac
 
 ![](NLP_clustering/trend2.png)
 
-## Network
+## Network Analysis
 For the patent citation network analysis, we focused on two levels of analysis: one for assignee-level and the other for patent-level. For the **assignee-level network** (e.g., Tsay et al., 2020), we are interested in the **key players (assignees of patents)** in the field of artifical intelligence (from 2019 to 2023), in terms of their *centrality* in the citation network. Here, we utilized a myriad of centrality measures——including degree centrality, PageRank centrality, betweenness centrality, and closeness centrality——to offer a comprehensive picture of the different aspects of influence and connectivity within the network (Bekkers and Martinelli,2021; Kim et al., 2021): 
 - **Degree centrality** reflects the number of direct connections an assignee has within the network and hence gives us an idea of the immediate citation relationships. 
 - **PageRank centrality** assesses the influence of an assignee in the network based on the number and quality of citations they receive and highlights the overall influence of assignees. 
@@ -305,6 +322,19 @@ pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_
 #### Calculate Overall KED
 A KED of 0.21 for artificial intelligence patents indicates that these patents, on average, are moderately distant from their cited patents in the technology space. This suggests a **balanced level of novelty and exploration**, implying that while there is some degree of innovation, a significant portion of AI patents builds incrementally on existing technologies rather than exploring entirely new technological areas.
 
+## Presentation
+We designed out presentation web application using `flask` module in Pyhton (see [`presentation` folder](/presentation) for more details). The template we used can be found [here](https://demosc.chinaz.net/Files/DownLoad/moban/202004/moban4546/). 
+
+## Google Drive
+A number of intermediate, large files are stored in a [shared Google Drive](https://drive.google.com/drive/u/0/folders/1WVNa82HSAvxmRaRiNh5k4_ZN-g6WbEua?ths=true).
+
+      .
+      ├── cleaned_data/                       # cleaned scraped patent data
+      ├── network/                            # parquet files of patent network
+      ├── raw_link/                           # csv files with link to the patent details page
+      ├── df_with_clusters_merged_new.csv/    # dataframe with full information (including keyword clusters)
+      ├── df_with_clusters_merged.xlsx/       # dataframe with partial information (including keyword clusters)
+      └── pre.mp4                             # recorded video for final presentaion 
 
 ## References
 - Bekkers, R. N., & Martinelli, A. (2021). A Network Analysis Approach to Intellectual Property Research. In *Handbook of Intellectual Property Research: Lenses, Methods, and Perspectives* (pp. 506-522). Oxford University Press.
