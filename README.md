@@ -226,29 +226,31 @@ The trends for the remaining clusters indicate that the number of patents in eac
 ![](NLP_clustering/trend2.png)
 
 ## Network Analysis
-For the patent citation network analysis, we focused on two levels of analysis: one for assignee-level and the other for patent-level. For the **assignee-level network** (e.g., Tsay et al., 2020), we are interested in the **key players (assignees of patents)** in the field of artifical intelligence (from 2019 to 2023), in terms of their *centrality* in the citation network. Here, we utilized a myriad of centrality measures——including degree centrality, PageRank centrality, betweenness centrality, and closeness centrality——to offer a comprehensive picture of the different aspects of influence and connectivity within the network (Bekkers and Martinelli,2021; Kim et al., 2021): 
-- **Degree centrality** reflects the number of direct connections an assignee has within the network and hence gives us an idea of the immediate citation relationships. 
-- **PageRank centrality** assesses the influence of an assignee in the network based on the number and quality of citations they receive and highlights the overall influence of assignees. 
-- **Betweenness centrality**  indicates the extent to which an assignee lies on the shortest paths between other assignees, highlighting their role as intermediaries or brokers within the network. 
-- **Closeness centrality** represents how close an assignee is to all other assignees in the network. It is the inverse of the average shortest path distance from an assignee to all other assignees, indicating how quickly information can spread from them to others.
+For the patent citation network analysis, we are interested in two things: 1) **centrality measures** of each keyword cluster and 2) overall **knowledge exploration distance** (KED; Choi and Yoon, 2022) in the field of AI. 
 
-When it comes to the **patent-level network**, we are interested in calculating the **Knowledge Exploration Distance** (KED; Choi and Yoon, 2022) for patents by integrating node embeddings (embedded via *node2vec*) and BERT embedded vectors. KED measures the distance between a patent and its cited patents in the technology space. A larger KED indicates that the patent has explored more diverse and distant technological knowledge, suggesting higher novelty and innovation. This metric helps in understanding how much an invention has deviated from its predecessors, indicating the degree of exploration and innovation in its development.
+- **Centrality Measures Grouped by Each Keyword Cluster**
+   - We utilized a myriad of centrality measures to offer a comprehensive picture of the different aspects of influence and connectivity within the network (Bekkers and Martinelli,2021; Kim et al., 2021): 
+      - **Degree centrality** reflects the number of direct connections an assignee has within the network and hence gives us an idea of the immediate citation relationships. 
+      - **PageRank centrality** assesses the influence of an assignee in the network based on the number and quality of citations they receive and highlights the overall influence of assignees. 
+      - **Betweenness centrality**  indicates the extent to which an assignee lies on the shortest paths between other assignees, highlighting their role as intermediaries or brokers within the network. 
+      - **Closeness centrality** represents how close an assignee is to all other assignees in the network. It is the inverse of the average shortest path distance from an assignee to all other assignees, indicating how quickly information can spread from them to others.
 
-Following Choi and Yoon's (2012) approach, we calculate KED by first concatenating abstract vectors and network embeddings to form a comprehensive representation for each patent. We then computed the cosine similarity between the combined vector of the citing patent and each of its cited patents. For each citing patent, we calculated the KED by averaging the dissimilarity between its combined vector and the combined vectors of its cited patents. The dissimilarity is calculated as one minus the cosine similarity (see the formula above). Next, we aggregated the calculated KED values for all citing patents to analyze the overall knowledge exploration trends. A higher KED indicates that the citing patent is semantically and technologically distant from its cited patents, suggesting high novelty and exploration. In contrast, a lower KED Indicates that the citing patent is semantically and technologically close to its cited patents, suggesting incremental innovation.
+- **Overall KED in the Field of AI**
+   - KED measures the distance between a patent and its cited patents in the technology space. A higher KED indicates that the citing patent is semantically and technologically distant from its cited patents, suggesting high novelty and exploration. In contrast, a lower KED Indicates that the citing patent is semantically and technologically close to its cited patents, suggesting incremental innovation. This metric helps in understanding how much an invention has deviated from its predecessors, indicating the degree of exploration and innovation in its development.
+   - Following Choi and Yoon's (2012) approach, we calculate KED by first concatenating abstract vectors (via BERT) and network embeddings (via node2vec) to form a comprehensive representation for each patent. We then computed the cosine similarity between the combined vector of the citing patent and each of its cited patents. For each citing patent, we calculated the KED by averaging the dissimilarity between its combined vector and the combined vectors of its cited patents. The dissimilarity is calculated as one minus the cosine similarity (see the formula above). Next, we aggregated the calculated KED values for all citing patents to analyze the overall knowledge exploration trends. 
 
-![](/screenshots/ked_formula.png)
+      ![](/screenshots/ked_formula.png)
 
-In this project, calculating KED is crucial for several reasons:
-- **Innovation Assessment**: It helps identify patents that exhibit significant innovation by exploring new technological areas.
-- **Research and Development Insights**: By understanding the KED, companies and researchers can evaluate the effectiveness of their R&D efforts in producing novel technologies.
-- **Strategic Decision Making**: Organizations can use KED to make informed decisions about patent portfolios, investment in R&D, and strategic partnerships.
-- **Patent Value Estimation**: KED can be correlated with other patent indicators to estimate the potential value and impact of patents, guiding patent filing and maintenance decisions.
+   - In this project, calculating KED is crucial for several reasons:
+      - **Innovation Assessment**: It helps identify patents that exhibit significant innovation by exploring new technological areas.
+      - **Research and Development Insights**: By understanding the KED, companies and researchers can evaluate the effectiveness of their R&D efforts in producing novel technologies.
+      - **Strategic Decision Making**: Organizations can use KED to make informed decisions about patent portfolios, investment in R&D, and strategic partnerships.
+      - **Patent Value Estimation**: KED can be correlated with other patent indicators to estimate the potential value and impact of patents, guiding patent filing and maintenance decisions.
 
 ### Install and Setup Packages for Midway Operation
 A number of packages are needed to be installed for conducting network analysis on Midway, including *Graphframe*, *node2vec*, and *transformer*. For detailed steps of installation and setup, please refer to this [instruction markdown file](network/Install_&_Setup_Packages.md).
 
-### Patent-Level Citation Network
-#### Data Preparation
+### Data Preparation
 We utilized Spark to prepare the parquet file storing network data of patent citation (before conducting calculating centrality measures and KED). We first loaded the [all_patent_info.csv](https://drive.google.com/drive/u/0/folders/1KLTluo6D2P4qdGFC6XNn2QzNufvO7IIu?ths=true), which is the patent data we scraped from Google Patents. The *publication date* column was converted to DateType, and additional columns for year and quarter were created based on the publication date. A combined year_quarter column is created in the format 'YYYYQX'. Next, we loaded and processed cluster information from [df_with_clusters_merged.xlsx](NLP_clustering/df_with_clusters_merged.xlsx). A dictionary mapping cluster numbers to cluster names was created, and a User Defined Function (UDF) was registered to map cluster numbers to names. This UDF was applied to add a cluster_name column to the cluster DataFrame. The patent data was then joined with the cluster information DataFrame on the id column, and columns of interest (id, abstract, citedby, year_quarter, cluster_name) are selected. The joined DataFrame was repartitioned for efficiency, checkpointed to ensure fault tolerance, and saved as a Parquet file (see [patent.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) on Google Drive). In addition, to store the vertices and edges of the citation network, a UDF was registered to parse the citedby column and extract citing information. Citing IDs were formatted to ensure consistency, and relevant columns (cited_id, citing_id) were selected to create the citation DataFrame. Finally, vertices and edges DataFrames were created from the citation data and saved as Parquet files (see [vertices.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) and [edges.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) on Google Drive).
 
 The python code to perform these data preparation steps can be found [here](network/patent_network_data_preparation.py). To reproduce the result, first set up pyspark in sinteractive (see `Setup for sinteractive` section in the [Install_&_Setup_Packages markdown file](network/Install_&_Setup_Packages.md)):
@@ -269,7 +271,7 @@ Then, type the following command in the terminal:
 pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_network_data_preparation.py
 ```
 
-#### Calculate Centrality Measures (Grouped by Keyword Clusters)
+### Calculate Centrality Measures (Grouped by Keyword Clusters)
 We used Dask to perform the *group-by* and *aggregate* operations to derive the centrality measures for each patent keyword cluster (see the [notebook](network/network_features_by_cluster.ipynb) for more details).
 1. **Degree Centrality**
 
@@ -298,7 +300,7 @@ We used Dask to perform the *group-by* and *aggregate* operations to derive the 
 
 In sum, the AI patent network exhibits both general connectivity and distinct characteristics across various subfields. Patents in General Machine Learning and Systems (Cluster 0) and Image Processing and Recognition (Cluster 1) show high influence and connectivity, serving as a backbone in the network. Document Management and Text Processing (Cluster 2) patents are more specialized and peripheral, while Authentication and Security (Cluster 7) patents act as critical bridges with high closeness and betweenness centrality, connecting diverse areas of AI research. Feature Extraction and Machine Learning (Cluster 9) patents are highly connected and pivotal for machine learning applications. Virtual Reality and Augmented Reality (Cluster 5) patents play a balanced role, enhancing user interaction through AI applications in virtual environments. Other clusters, such as Signal Processing and Wireless Communication (Cluster 8), have unique centrality characteristics, reflecting their specialized contributions. These distinctions highlight the varied contributions and strategic importance of different AI subfields, driving innovation and technological advancement across the AI patent landscape.
 
-#### Derive Network Emebedding via Node2Vec
+### Derive Network Emebedding via Node2Vec
 To derive the strucutral information of each patent under the directed graph (patent citation network), we utilized node2vec to get network embedding via Spark. After we loaded prepared parquet data from the previous step, we construct the graph (specifically, GraphFrame) from vertices and edges GraphFrame, befofe converting it to a NetworkX directed graph. We then used the Node2Vec algorithm to generate network embeddings by specifying parameters such as dimensions, walk length, number of walks, and number of workers. Finally, we saved the trained Node2Vec model (see `node2vec_model` folder on [Google Drive](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF)).
 
 The python code to train the node2vec model can be found [here](network/patent_network_train_node2vec.py). To reproduce the result, first set up pyspark in sinteractive (see `Setup for sinteractive` section in the [Install_&_Setup_Packages markdown file](network/Install_&_Setup_Packages.md)):
@@ -319,8 +321,8 @@ Then, type the following command in the terminal:
 pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_network_train_node2vec.py
 ```
 
-#### Calculate Overall KED
-A KED of 0.21 for artificial intelligence patents indicates that these patents, on average, are moderately distant from their cited patents in the technology space. This suggests a **balanced level of novelty and exploration**, implying that while there is some degree of innovation, a significant portion of AI patents builds incrementally on existing technologies rather than exploring entirely new technological areas.
+### Calculate Overall KED
+We calculated the overall KED of AI patents from 2019 to 2023 using Dask (see the [notebook](network/calculate_ked_dask.ipynb) for more details). A KED of 0.21 for artificial intelligence patents indicates that these patents, on average, are moderately distant from their cited patents in the technology space. This suggests a **balanced level of novelty and exploration**, implying that while there is some degree of innovation, a significant portion of AI patents builds incrementally on existing technologies rather than exploring entirely new technological areas.
 
 ## Presentation
 We designed out presentation web application using `flask` module in Pyhton (see [`presentation` folder](/presentation) for more details). The template we used can be found [here](https://demosc.chinaz.net/Files/DownLoad/moban/202004/moban4546/). 
@@ -348,7 +350,6 @@ A number of intermediate, large files are stored in a [shared Google Drive](http
 - OECD. (2015). *OECD Science, Technology and Industry Scoreboard 2015: Innovation for growth and society*. OECD Publishing.
 - Porter, A. L., & Rafols, I. (2009). Is science becoming more interdisciplinary? Measuring and mapping six research fields over time. *Scientometrics*, 81(3), 719-745.
 - Singh, J. (2005). Collaborative networks as determinants of knowledge diffusion patterns. *Management Science*, 51(5), 756-770.
-- Tsay, M. Y., & Liu, Z. W. (2020). Analysis of the patent cooperation network in global artificial intelligence technologies based on the assignees. *World Patent Information*, 63, 102000.
 
 ## Acknowledgement
 
