@@ -57,19 +57,60 @@
 </nav>
 <!-- service page breadcrumns -->
 
-<!-- services page block 1 -->
+<!-- services page block 1 (Patent-Level Citation Network - Data Preparation) -->
+<section class="w3l-features">
+  <div class="call-w3">
+      <div class="container">
+          <div class="row align-items-center">
+              <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+                  <h4 class="section-title"><b>Patent-Level Citation Network - Data Preparation</b></h4>
+                  <p class="text-center">We used Spark to prepare parquet files (network data of patent citations).</p>
+              </div>
+          </div>
+
+          <!-- Degree Centrality Section -->
+          <div class="row main-cont-wthree-2 mt-5">
+              <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
+                  <h4 class="title-left"><b>Data Preparation</b></h4>
+                  <p class="text-para"> 
+                    <ul>
+                      <li>We first loaded the scraped patent data, converted the publication date column, and created additional columns for year and quarter.</li>
+                      <li>Cluster information was processed and joined with the patent data (saved as <span style="color: #ff9900;">patent.parquet</span>).</li>
+                      <li>Additionally, vertices and edges of the citation network were extracted and saved as <span style="color: #ff9900;">vertices.parquet</span> and <span style="color: #ff9900;">edges.parquet</span>.</li>
+                    </ul> 
+                  </p>
+              </div>
+              <div class="col-lg-6 feature-grid-right order1">
+                  <img src="assets/images/pyspark_logo.jpeg" class="img-fluid img-shadow" alt="services">
+              </div>
+          </div>
+                  <!-- <p class="text-para">
+                    <ul>
+                      <li>We first loaded the scraped patent data, converted the publication date column, and created additional columns for year and quarter.</li>
+                      <li>Cluster information was processed and joined with the patent data.</li>
+                      <li>The patent data was repartitioned, checkpointed, and saved as <i>patent.parquet</i>.</li>
+                      <li>Additionally, vertices and edges of the citation network were extracted and saved as <i>vertices.parquet</i> and <i>edges.parquet</i>.
+                    </ul> 
+                  </p> -->
+                  <!-- Degree Centrality Section -->
+      </div>
+  </div>
+</section>
+<!-- services page block 1 (Patent-Level Citation Network - Data Preparation) -->
+
+<!-- services page block 2 (Patent-Level Citation Network - Calculate Centrality Measures) -->
 <section class="w3l-features">
     <div class="call-w3">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
-                    <h4 class="section-title"><b>Network Features</b></h4>
-                    <p class="text-center">For the patent citation network analysis, we focused on two levels of analysis: one for assignee-level 
-                      and the other for patent-level. Here, we utilized a myriad of centrality measures to 
-                       offer a comprehensive picture of the different aspects of the network, 
-                       including degree centrality, PageRank centrality, betweenness centrality, and closeness centrality.</p>
+                    <h4 class="section-title"><b>Patent-Level Citation Network - Calculate Centrality Measures</b></h4>
+                    <p class="text-center">We used Dask to perform the group-by and aggregate operations to derive the centrality measures 
+                      for each patent keyword cluster.</p>
                 </div>
             </div>
+
+            <!-- Degree Centrality Section -->
             <div class="row main-cont-wthree-2 mt-5">
                 <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
                     <h4 class="title-left"><b>Degree centrality</b></h4>
@@ -85,6 +126,8 @@
                     <img src="assets/images/centrality_cluster.png" class="img-fluid img-shadow" alt="services">
                 </div>
             </div>
+
+            <!-- PageRank Centrality Section -->
             <div class="row main-cont-wthree-2 mt-5">
                 <div class="col-lg-6 feature-grid-right">
                     <img src="assets/images/pagerank_cluster.png" class="img-fluid img-shadow" alt="services">
@@ -99,6 +142,8 @@
                     </p>
                 </div>
             </div>
+
+             <!-- Betweenness Centrality Section -->
             <div class="row main-cont-wthree-2 mt-5">
               <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
                   <h4 class="title-left"><b>Betweenness Centrality</b></h4>
@@ -113,6 +158,8 @@
                   <img src="assets/images/betweenness_cluster.png" class="img-fluid img-shadow" alt="services">
               </div>
           </div>
+
+          <!-- Closeness Centrality Section -->
           <div class="row main-cont-wthree-2 mt-5">
               <div class="col-lg-6 feature-grid-right">
                   <img src="assets/images/closeness_cluster.png" class="img-fluid img-shadow" alt="services">
@@ -128,10 +175,42 @@
                   </p>
               </div>
           </div>
+
         </div>
     </div>
 </section>
-<!-- services page block 1 -->
+<!-- services page block 2 (Patent-Level Citation Network - Calculate Centrality Measures)-->
+
+<!-- services page block 3 (Patent-Level Citation Network - Calculate Knowledge Exploration Distance) -->
+<section class="w3l-features">
+  <div class="call-w3">
+      <div class="container">
+          <!-- Patent Characteristics Section -->
+          <div class="row align-items-center">
+              <div class="col-lg-8 offset-lg-2 col-md-12 col-sm-12">
+                  <h4 class="section-title"><b>Patent-Level Citation Network - Calculate Knowledge Exploration Distance</b></h4>
+                  <p class="text-center">This section discusses various characteristics of patents within the AI field, highlighting different metrics such as the number of citations, innovation impact, and technological advancements across different clusters.</p>
+              </div>
+          </div>
+          <!-- Add content for the new section here -->
+          <div class="row main-cont-wthree-2 mt-5">
+              <div class="col-lg-6 feature-grid-left order2 mt-lg-0 mt-sm-5 mt-4">
+                  <h4 class="title-left"><b>Citation Analysis</b></h4>
+                  <p class="text-para">
+                    <ul>
+                      <li>Analysis of citation patterns reveals significant insights into the influence and reach of patents in different clusters.</li>
+                      <li>Clusters focusing on <span style="color: #ff9900;">General Machine Learning and Systems</span> and <span style="color: #ff9900;">Feature Extraction and Machine Learning</span> exhibit higher citation counts, indicating their pivotal role in AI research.</li>
+                    </ul>  
+                  </p>
+              </div>
+              <div class="col-lg-6 feature-grid-right order1">
+                  <img src="assets/images/citation_analysis.png" class="img-fluid img-shadow" alt="Citation Analysis">
+              </div>
+          </div>
+      </div>
+  </div>
+</section>
+<!-- services page block 3 (Patent-Level Citation Network - Calculate Knowledge Exploration Distance) -->
 
 <!-- /mobile section --->
 <section class="w3l-mobile-content-6">
