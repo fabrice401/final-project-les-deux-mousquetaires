@@ -238,8 +238,7 @@ A number of packages are needed to be installed for conducting network analysis 
 #### Data Preparation
 We utilized Spark to prepare the parquet file storing network data of patent citation (before conducting calculating centrality measures and KED). We first loaded the [all_patent_info.csv](https://drive.google.com/drive/u/0/folders/1KLTluo6D2P4qdGFC6XNn2QzNufvO7IIu?ths=true), which is the patent data we scraped from Google Patents. The *publication date* column was converted to DateType, and additional columns for year and quarter were created based on the publication date. A combined year_quarter column is created in the format 'YYYYQX'. Next, we loaded and processed cluster information from [df_with_clusters_merged.xlsx](NLP_clustering/df_with_clusters_merged.xlsx). A dictionary mapping cluster numbers to cluster names was created, and a User Defined Function (UDF) was registered to map cluster numbers to names. This UDF was applied to add a cluster_name column to the cluster DataFrame. The patent data was then joined with the cluster information DataFrame on the id column, and columns of interest (id, abstract, citedby, year_quarter, cluster_name) are selected. The joined DataFrame was repartitioned for efficiency, checkpointed to ensure fault tolerance, and saved as a Parquet file (see [patent.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) on Google Drive). In addition, to store the vertices and edges of the citation network, a UDF was registered to parse the citedby column and extract citing information. Citing IDs were formatted to ensure consistency, and relevant columns (cited_id, citing_id) were selected to create the citation DataFrame. Finally, vertices and edges DataFrames were created from the citation data and saved as Parquet files (see [vertices.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) and [edges.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) on Google Drive).
 
-
-After setting up pyspark in sinteractive (see `Setup for sinteractive` section in the [Install_&_Setup_Packages markdown file](network/Install_&_Setup_Packages.md)):
+The python code to perform these data preparation steps can be found [here](network/patent_network_data_preparation.py). To reproduce the result, first set up pyspark in sinteractive (see `Setup for sinteractive` section in the [Install_&_Setup_Packages markdown file](network/Install_&_Setup_Packages.md)):
 ```bash
 # Initiate sinteractive
 sinteractive --ntasks=16 --account=macs30123
@@ -251,7 +250,7 @@ export PYSPARK_DRIVER_PYTHON=/software/python-anaconda-2022.05-el8-x86_64/bin/py
 export LD_LIBRARY_PATH=/home/veeratejg/anaconda3/lib:$LD_LIBRARY_PATH
 ```
 
-type the following command in the terminal:
+Then, type the following command in the terminal:
 
 ```bash
 pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_network_data_preparation.py
