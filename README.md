@@ -211,6 +211,55 @@ The trends for the remaining clusters indicate that the number of patents in eac
 ![](NLP_clustering/trend2.png)
 
 ## Network
+When it comes to the patent citation network analysis, we focused on two levels of analysis: one for assignee-level and the other for patent-level. For the <span style="color:red">assignee-level network</span> (e.g., Tsay et al., 2020), we are interested in the **key players (assignees of patents)** in the field of artifical intelligence (from 2019 to 2023), in terms of their *centrality* in the citation network. Here, we utilized a myriad of centrality measures——including degree centrality, PageRank centrality, betweenness centrality, and closeness centrality——to offer a comprehensive picture of the different aspects of influence and connectivity within the network (Bekkers and Martinelli,2021; Kim et al., 2021): 
+- **Degree centrality** reflects the number of direct connections an assignee has within the network and hence gives us an idea of the immediate citation relationships. 
+- **PageRank centrality** assesses the influence of an assignee in the network based on the number and quality of citations they receive and highlights the overall influence of assignees. 
+- **Betweenness centrality**  indicates the extent to which an assignee lies on the shortest paths between other assignees, highlighting their role as intermediaries or brokers within the network. 
+- **Closeness centrality** represents how close an assignee is to all other assignees in the network. It is the inverse of the average shortest path distance from an assignee to all other assignees, indicating how quickly information can spread from them to others.
+
+When it comes to the <span style="color:red">patent-level network</span>, we are interested in calculating the **Knowledge Exploration Distance** (KED; Choi and Yoon, 2022) for patents by integrating node embeddings (embedded via *node2vec*) and BERT embedded vectors. KED measures the distance between a patent and its cited patents in the technology space. A larger KED indicates that the patent has explored more diverse and distant technological knowledge, suggesting higher novelty and innovation. This metric helps in understanding how much an invention has deviated from its predecessors, indicating the degree of exploration and innovation in its development.
+
+Following Choi and Yoon's (2012) approach, we calculate KED by first concatenating abstract vectors and network embeddings to form a comprehensive representation for each patent. We then computed the cosine similarity between the combined vector of the citing patent and each of its cited patents. For each citing patent, we calculated the KED by averaging the dissimilarity between its combined vector and the combined vectors of its cited patents. The dissimilarity is calculated as one minus the cosine similarity (see the formula above). Next, we aggregated the calculated KED values for all citing patents to analyze the overall knowledge exploration trends, before grouping them by the keyword cluster we derived earlier. A higher KED indicates that the citing patent is semantically and technologically distant from its cited patents, suggesting high novelty and exploration. In contrast, a lower KED Indicates that the citing patent is semantically and technologically close to its cited patents, suggesting incremental innovation.
+
+![](/screenshots/ked_formula.png)
+
+In this project, calculating KED is crucial for several reasons:
+- **Innovation Assessment**: It helps identify patents that exhibit significant innovation by exploring new technological areas.
+- **Research and Development Insights**: By understanding the KED, companies and researchers can evaluate the effectiveness of their R&D efforts in producing novel technologies.
+- **Strategic Decision Making**: Organizations can use KED to make informed decisions about patent portfolios, investment in R&D, and strategic partnerships.
+- **Patent Value Estimation**: KED can be correlated with other patent indicators to estimate the potential value and impact of patents, guiding patent filing and maintenance decisions.
+
+By grouping KED by patent abstract keyword clusters, the project aims to understand the distribution of innovation across different technological areas, providing valuable insights into the dynamics of technological advancements in various fields.
+
+### Install and Setup Packages for Midway Operation
+A number of packages are needed to be installed for conducting network analysis on Midway, including *Graphframe*, *node2vec*, and *transformer*. For detailed steps of installation and setup, please refer to this [instruction markdown file](network/Install_&_Setup_Packages.md).
+
+Constructing and analyzing a network with over 500,000 nodes and edges required substantial computational power. We addressed this challenge by leveraging both PySpark and Dask. PySpark was used for the initial data processing and feature extraction, while Dask provided the necessary scalability for the detailed network analysis and visualization tasks. By combining these tools, we were able to compute network characteristics and generate visualizations efficiently, even with the large scale of our data. This hybrid approach ensured that our network analysis was both comprehensive and scalable.
+
+### Patent-Level Citation Network
+#### Data Preparation
+We utilized Spark to prepare the parquet file storing network data of patent citation (before conducting calculating centrality measures and KED). We first loaded the [all_patent_info.csv](https://drive.google.com/drive/u/0/folders/1KLTluo6D2P4qdGFC6XNn2QzNufvO7IIu?ths=true), which is the patent data we scraped from Google Patents. The *publication date* column was converted to DateType, and additional columns for year and quarter were created based on the publication date. A combined year_quarter column is created in the format 'YYYYQX'. Next, we loaded and processed cluster information from [df_with_clusters_merged.xlsx](NLP_clustering/df_with_clusters_merged.xlsx). A dictionary mapping cluster numbers to cluster names was created, and a User Defined Function (UDF) was registered to map cluster numbers to names. This UDF was applied to add a cluster_name column to the cluster DataFrame. The patent data was then joined with the cluster information DataFrame on the id column, and columns of interest (id, abstract, citedby, year_quarter, cluster_name) are selected. The joined DataFrame was repartitioned for efficiency, checkpointed to ensure fault tolerance, and saved as a Parquet file (see [patent.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) on Google Drive). In addition, to store the vertices and edges of the citation network, a UDF was registered to parse the citedby column and extract citing information. Citing IDs were formatted to ensure consistency, and relevant columns (cited_id, citing_id) were selected to create the citation DataFrame. Finally, vertices and edges DataFrames were created from the citation data and saved as Parquet files (see [vertices.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) and [edges.parquet](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF) on Google Drive).
+
+
+After setting up pyspark in sinteractive (see `Setup for sinteractive` section in the [Install_&_Setup_Packages markdown file](network/Install_&_Setup_Packages.md)):
+```bash
+# Initiate sinteractive
+sinteractive --ntasks=16 --account=macs30123
+
+module load python spark
+
+export PYSPARK_DRIVER_PYTHON=/software/python-anaconda-2022.05-el8-x86_64/bin/python3
+# Export the LD_LIBRARY_PATH to include the directory that stores `libmkl_rt.so.1` file
+export LD_LIBRARY_PATH=/home/veeratejg/anaconda3/lib:$LD_LIBRARY_PATH
+```
+
+type the following command in the terminal:
+
+```bash
+pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_network_data_preparation.py
+```
+
+#### Calculate Centrality Measures (Grouped by Keyword Clusters)
 
 ![](NLP_clustering/centrality_cluster.png)
 
@@ -220,15 +269,30 @@ The trends for the remaining clusters indicate that the number of patents in eac
 
 ![](NLP_clustering/closeness_cluster.png)
 
+
+#### Derive Network Emebedding via Node2Vec
+
+#### Calculate KED (Grouped by Keyword Clusters)
+
+
+
+
+## Google Drive Storing Large Files
+
+
 ## References
+- Bekkers, R. N., & Martinelli, A. (2021). A Network Analysis Approach to Intellectual Property Research. In *Handbook of Intellectual Property Research: Lenses, Methods, and Perspectives* (pp. 506-522). Oxford University Press.
 - Breschi, S., & Lissoni, F. (2001). Knowledge Spillovers and Local Innovation Systems: A Critical Survey. *Industrial and Corporate Change*, 10(4), 975-1005.
+- Choi, J., & Yoon, J. (2022). Measuring knowledge exploration distance at the patent level: Application of network embedding and citation analysis. *Journal of informetrics*, 16(2), 101286
 - Griliches, Z. (1990). Patent statistics as economic indicators: A survey. *Journal of Economic Literature*, 28(4), 1661-1707.
 - Henderson, R., Jaffe, A., & Trajtenberg, M. (1998). Universities as a source of commercial technology: A detailed analysis of university patenting, 1965-1988. *Review of Economics and Statistics*, 80(1), 119-127.
+- Kim, J., Jeong, B., Kim, D. (2021). How to Study Patent Network Analysis. In: *Patent Analytics*. Springer, Singapore.
 - National Academy of Sciences. (2017). *Building America’s Skilled Technical Workforce*. Washington, DC: The National Academies Press.
 - Narin, F., Hamilton, K. S., & Olivastro, D. (1997). The increasing linkage between U.S. technology and public science. *Research Policy*, 26(3), 317-330.
 - OECD. (2015). *OECD Science, Technology and Industry Scoreboard 2015: Innovation for growth and society*. OECD Publishing.
 - Porter, A. L., & Rafols, I. (2009). Is science becoming more interdisciplinary? Measuring and mapping six research fields over time. *Scientometrics*, 81(3), 719-745.
 - Singh, J. (2005). Collaborative networks as determinants of knowledge diffusion patterns. *Management Science*, 51(5), 756-770.
+- Tsay, M. Y., & Liu, Z. W. (2020). Analysis of the patent cooperation network in global artificial intelligence technologies based on the assignees. *World Patent Information*, 63, 102000.
 
 ## Acknowledgement
 
