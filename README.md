@@ -5,7 +5,7 @@ This is the final project for MACS 30123 course Large-Scale Computing for the So
 - Guankun Li: Web scraping, Clustering & Trends
 - Tianyue Cong: Web scraping, Network Analysis
 
-## Research Question
+## Research Questions
 
 1. **Are there distinct subfields within the domain of AI patents? If so, what are the characteristics of these subfields?**
 
@@ -257,24 +257,57 @@ pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_
 ```
 
 #### Calculate Centrality Measures (Grouped by Keyword Clusters)
+We used Dask to perform the *group-by* and *aggregate* operations to derive the centrality measures for each patent keyword cluster (see the [notebook](NLP_clustering/network_features_by_cluster.ipynb) for more details).
+1. **Degree Centrality**
 
 ![](NLP_clustering/centrality_cluster.png)
+   - Clusters show varying levels of average degree centrality, with Clusters 7 (Authentication and Security) and 9 (Feature Extraction and Machine Learning) having the highest scores.
+   - This indicates that patents in these clusters have a higher number of direct connections to other patents, signifying their importance and connectivity within the network.
+
+2. **PageRank Centrality**
 
 ![](NLP_clustering/pagerank_cluster.png)
+   - The average PageRank scores for each cluster are relatively similar, indicating that patents across different clusters have a comparable level of influence in the citation network.
+   - Clusters related to General Machine Learning and Systems, Image Processing and Recognition, and Document Management and Text Processing exhibit slightly higher average PageRank scores.
+
+3. **Betweenness Centrality**
 
 ![](NLP_clustering/betweenness_cluster.png)
+   - The average betweenness centrality scores show significant variation, with Cluster 7 (Authentication and Security) having a notably higher score than other clusters.
+   - This suggests that patents in the Authentication and Security cluster often serve as bridges connecting different parts of the network, highlighting their strategic importance in the flow of information.
+
+4. **Closeness Centrality**
 
 ![](NLP_clustering/closeness_cluster.png)
+   - There is noticeable variation in the average closeness centrality among clusters.
+   - Cluster 7 (Authentication and Security) shows the highest average closeness centrality, suggesting that patents in this cluster are more central and closer to all other nodes in the network.
+   - Clusters related to Sample Analysis and Training Models (Cluster 3) and Document Management and Text Processing (Cluster 2) have lower average closeness centrality scores, indicating they are more peripheral in the network.
 
+In sum, the AI patent network exhibits both general connectivity and distinct characteristics across various subfields. Patents in General Machine Learning and Systems (Cluster 0) and Image Processing and Recognition (Cluster 1) show high influence and connectivity, serving as a backbone in the network. Document Management and Text Processing (Cluster 2) patents are more specialized and peripheral, while Authentication and Security (Cluster 7) patents act as critical bridges with high closeness and betweenness centrality, connecting diverse areas of AI research. Feature Extraction and Machine Learning (Cluster 9) patents are highly connected and pivotal for machine learning applications. Virtual Reality and Augmented Reality (Cluster 5) patents play a balanced role, enhancing user interaction through AI applications in virtual environments. Other clusters, such as Signal Processing and Wireless Communication (Cluster 8), have unique centrality characteristics, reflecting their specialized contributions. These distinctions highlight the varied contributions and strategic importance of different AI subfields, driving innovation and technological advancement across the AI patent landscape.
 
 #### Derive Network Emebedding via Node2Vec
+To derive the strucutral information of each patent under the directed graph (patent citation network), we utilized node2vec to get network embedding via Spark. After we loaded prepared parquet data from the previous step, we construct the graph (specifically, GraphFrame) from vertices and edges GraphFrame, befofe converting it to a NetworkX directed graph. We then used the Node2Vec algorithm to generate network embeddings by specifying parameters such as dimensions, walk length, number of walks, and number of workers. Finally, we saved the trained Node2Vec model (see `node2vec_model` folder on [Google Drive](https://drive.google.com/drive/u/0/folders/1J0MEV7HCd-SvVzhd6RlTTaV5OMj0lhGF)).
+
+The python code to train the node2vec model can be found [here](network/patent_network_train_node2vec.py). To reproduce the result, first set up pyspark in sinteractive (see `Setup for sinteractive` section in the [Install_&_Setup_Packages markdown file](network/Install_&_Setup_Packages.md)):
+```bash
+# Initiate sinteractive
+sinteractive --ntasks=16 --account=macs30123
+
+module load python spark
+
+export PYSPARK_DRIVER_PYTHON=/software/python-anaconda-2022.05-el8-x86_64/bin/python3
+# Export the LD_LIBRARY_PATH to include the directory that stores `libmkl_rt.so.1` file
+export LD_LIBRARY_PATH=/home/veeratejg/anaconda3/lib:$LD_LIBRARY_PATH
+```
+
+Then, type the following command in the terminal:
+
+```bash
+pyspark --jars packages/graphframes-0.8.2-spark3.2-s_2.12.jar -i network/patent_network_train_node2vec.py
+```
 
 #### Calculate KED (Grouped by Keyword Clusters)
 
-
-
-
-## Google Drive Storing Large Files
 
 
 ## References
