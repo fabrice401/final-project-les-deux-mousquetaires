@@ -34,12 +34,5 @@ if not os.path.exists(directory):
     os.makedirs(directory)
 node2vec_model.save(node2vec_model_path)
 
-# # Create a DataFrame with embeddings
-# network_embeddings = node2vec_model.wv.vectors
-# network_embedding_df = spark.createDataFrame([(str(node), network_embeddings[i].tolist()) for i, node in enumerate(nx_g.nodes)], ["id", "network_embedding"])
-
-# # Save the embedded vectors to a Parquet file
-# network_embedding_df.write.parquet("data/node_embedding.parquet")
-
 # Stop the Spark session
 spark.stop()
