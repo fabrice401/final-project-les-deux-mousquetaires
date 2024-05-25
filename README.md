@@ -336,7 +336,7 @@ A number of intermediate, large files are stored in a [shared Google Drive](http
       ├── raw_link/                           # csv files with link to the patent details page
       ├── df_with_clusters_merged_new.csv/    # dataframe with full information (including keyword clusters)
       ├── df_with_clusters_merged.xlsx/       # dataframe with partial information (including keyword clusters)
-      └── pre.mp4                             # recorded video for final presentaion 
+      └── presentation.mp4                             # recorded video for final presentaion 
 
 ## References
 - Bekkers, R. N., & Martinelli, A. (2021). A Network Analysis Approach to Intellectual Property Research. In *Handbook of Intellectual Property Research: Lenses, Methods, and Perspectives* (pp. 506-522). Oxford University Press.
